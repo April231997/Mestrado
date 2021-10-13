@@ -14,8 +14,7 @@ coleta e local de coleta como base.
 
 ANÁLISE PLANEJADA:
 Para verificar as associações entre as variáveis dependentes e explanatórias serão desenvolvidos Modelos Mistos Aditivos Generalizados (Generalized Additive Mixed Models -
-GAMMs) simples e múltiplos. Embora a obtenção das amostras não envolva efeitos de agrupamento, esse tipo de modelagem será adotado porque permite incorporar estruturas de  
-autocorrelação espacial (no caso, influência das sub-bacias) e, também, evidenciar relações não  lineares entre as variáveis envolvidas. Desse modo, o comprimento e o peso serão 
+GAMMs) simples e múltiplos. Embora a obtenção das amostras não envolva efeitos de agrupamento, esse tipo de modelagem será adotado porque permite incorporar estruturas de autocorrelação espacial (no caso, influência das sub-bacias) e, também, evidenciar relações não  lineares entre as variáveis envolvidas. Desse modo, o comprimento e o peso serão 
 modelados às explanatórias, considerando cinco estruturas de correlação espacial: exponencial, gaussiana, linear, racional e esférica. Para a escolha dos modelos, serão usados os 
 menores valores de AIC (Akaike Information Criterion), o maior valor do coeficiente de determinação ajustado (R2 ajustado) e os valores de significância entre as variáveis 
 independentes e dependente (P < 0.05 como critério para o nível de significância). Todos os procedimentos das modelagens serão realizados com as funções disponíveis nos 
