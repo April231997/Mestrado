@@ -39,8 +39,8 @@ m_nlme <- lme(CP ~ 1, data = Samlminus, ~ 1 | Salminus, method = "REML")
 ## para menos de 10 observações, gam não é o melhor modelo ##
 
 
-_____________________________________________________________________________________________________________________________________________
-## Checking basis size ##
+
+## Checking basis size -------------------------------------------------------------------##
 ## simulated data ##
 set.seed(2)
 n <- 400
@@ -79,11 +79,58 @@ p6 <- ggplot(data.frame(x = x2, y = y_binom),
 plot_grid(p1, p3, p5, p2, p4, p6, ncol = 3, align = 'hv', axis = 'lrtb')
 
 ## how well does the model fit? many choices: k(df), family, type of smoother,..
-## k precisa ser grande o suficiente para caber todo "wiggliness". 
+## k precisa ser grande o suficiente para caber todo "wiggliness" (curvas). 
 Mas a compuação fica mais devagar com k grande
 ## check se o k é grande o suficiente 
 norm_model_1 <- gam(y_norm~s(x1, k = 4) + s(x2, k = 4), method = 'REML')
 gam.check(norm_model_1)
 ## essa função pega os resíduos do modelo e randomiza para ver se há algum tipo de relação com a cováriavel
 ## é uma avaliação se as associações são maiores nos resíduos do que nos resíduos randomizados, sugerindo se tem uma variação não modelada
-##
+## k-index tem q ser proximo de 1 e o p-value não pode ter * ##
+
+p1 <- draw(norm_model_1)
+## gam.check() creactes 4 plots: 1. quantile-quantile plots of residuals. if the model is right, should follow 1-1 line
+## 2. histogram of residual
+## 3. residuals vs linear predictor
+## 4. observed vs fitted values
+
+## gam_check_plots1, include=TRUE, echo=TRUE, results="hide"
+norm_model <- gam(y_norm ~ s(x1, k=12) + s(x2, k=12), method = 'REML')
+gam.check(norm_model, rep = 500)
+## rep function simula dados da resposta, criando intervalos de confiaça no plot
+## se mudar a family, se encaixar o modelo errado, fica visivel no gráfico
+pois_model <- gam(y_negbinom ~ s(x1, k=12) + s(x2, k=12), family=poisson, method= 'REML')
+gam.check(pois_model, rep = 500)
+negbin_model <- gam(y_negbinom ~ s(x1, k=12) + s(x2, k=12), family = nb, method = 'REML')
+gam.check(negbin_model, rep = 500)
+
+
+## Model selection - shrinkage -----------------------------------------------------------##
+## setup-shrinkage-example
+## an example of automatic model selection via null space penalization
+set.seed(3)
+n <- 200
+dat <- gamSim(1, n=n, scale=.15, dist='poisson', verbose = FALSE) ## simulate data
+dat <- transform(dat, x4 = runif(n, 0, 1), x5 = runif(n, 0, 1),
+                 f4 = rep(0, n), f5 = rep(0, n))   ## spurious
+
+## shrinkage-example-model-fit, echo = TRUE
+b <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3) +
+             s(x4) + s(x5),
+         data = dat, family = poisson, method = 'REML',
+         select = TRUE)
+
+
+## shrinkage-example-truth, echo = FALSE
+p1 <- ggplot(dat, aes(x = x0, y = f0)) + geom_line()
+p2 <- ggplot(dat, aes(x = x1, y = f1)) + geom_line()
+p3 <- ggplot(dat, aes(x = x2, y = f2)) + geom_line()
+p4 <- ggplot(dat, aes(x = x3, y = f3)) + geom_line()
+p5 <- ggplot(dat, aes(x = x4, y = f4)) + geom_line()
+p6 <- ggplot(dat, aes(x = x5, y = f5)) + geom_line()
+plot_grid(p1, p2, p3, p4, p5, p6, ncol = 3, align = 'vh', labels = paste0('x', 1:6))
+
+
+## shrinkage-example-summary
+summary(b)
+
