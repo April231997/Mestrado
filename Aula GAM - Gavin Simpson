@@ -1,0 +1,89 @@
+library('here')
+library('mgcv')
+library('gratia')
+library('gamair')
+library('ggplot2')
+library('purrr')
+library('mvnfast')
+library("tibble")
+library('gganimate')
+library('cowplot')
+library('tidyr')
+library("knitr")
+library("viridis")
+library('readr')
+library('dplyr')
+library('gganimate')
+
+## ----hadcrut-temp-example, echo = FALSE---------------------------------------
+library('readr')
+library('dplyr')
+URL <-  "https://bit.ly/hadcrutv4"
+gtemp <- read_delim(URL, delim = ' ', col_types = 'nnnnnnnnnnnn', col_names = FALSE) %>%
+    select(num_range('X', 1:2)) %>% setNames(nm = c('Year', 'Temperature'))
+
+## Plot
+gtemp_plt <- ggplot(gtemp, aes(x = Year, y = Temperature)) +
+    geom_line() + 
+    geom_point() +
+    labs(x = 'Year', y = expression(Temeprature ~ degree*C))
+gtemp_plt
+
+## Random effectts ##
+## gam() + bam()
+m_gam <- gam(CP ~ s(ANO, bs = "re"), data = Salminus, method = "REML")
+## ou ##
+## gamm() + gmm4::gamm4()
+m_nlme <- lme(CP ~ 1, data = Samlminus, ~ 1 | Salminus, method = "REML") 
+## as duas funções são iguais matematicamente, mas o gamm é melhor se houver afeitos aleatórios complexos, como modleos não gaussianos ##
+## para menos de 10 observações, gam não é o melhor modelo ##
+
+
+_____________________________________________________________________________________________________________________________________________
+## Checking basis size ##
+## simulated data ##
+set.seed(2)
+n <- 400
+x1 <- rnorm(n)
+x2 <- rnorm(n)
+y_val <- 1 + 2*cos(pi*x1) + 2/(1+exp(-5*(x2)))
+_norm <- y_val + rnorm(n, 0, 0.5)
+y_negbinom <- rnbinom(n, mu = exp(y_val),size=10)
+y_binom <- rbinom(n,1,prob = exp(y_val)/(1+exp(y_val))) 
+
+## plot
+p1 <- ggplot(data.frame(x = x1, y = y_norm),
+             aes(x = x, y = y)) +
+    geom_point()
+
+p2 <- ggplot(data.frame(x = x2, y = y_norm),
+             aes(x = x, y = y)) +
+    geom_point()
+
+p3 <- ggplot(data.frame(x = x1, y = y_negbinom),
+             aes(x = x, y = y)) +
+    geom_point()
+
+p4 <- ggplot(data.frame(x = x2, y = y_negbinom),
+             aes(x = x, y = y)) +
+    geom_point()
+
+p5 <- ggplot(data.frame(x = x1, y = y_binom),
+             aes(x = x, y = y)) +
+    geom_point()
+
+p6 <- ggplot(data.frame(x = x2, y = y_binom),
+             aes(x = x, y = y)) +
+    geom_point()
+
+plot_grid(p1, p3, p5, p2, p4, p6, ncol = 3, align = 'hv', axis = 'lrtb')
+
+## how well does the model fit? many choices: k(df), family, type of smoother,..
+## k precisa ser grande o suficiente para caber todo "wiggliness". 
+Mas a compuação fica mais devagar com k grande
+## check se o k é grande o suficiente 
+norm_model_1 <- gam(y_norm~s(x1, k = 4) + s(x2, k = 4), method = 'REML')
+gam.check(norm_model_1)
+## essa função pega os resíduos do modelo e randomiza para ver se há algum tipo de relação com a cováriavel
+## é uma avaliação se as associações são maiores nos resíduos do que nos resíduos randomizados, sugerindo se tem uma variação não modelada
+##
