@@ -15,7 +15,7 @@ library('readr')
 library('dplyr')
 library('gganimate')
 
-## ----hadcrut-temp-example, echo = FALSE---------------------------------------
+## hadcrut-temp-example, echo = FALSE
 library('readr')
 library('dplyr')
 URL <-  "https://bit.ly/hadcrutv4"
@@ -105,7 +105,7 @@ negbin_model <- gam(y_negbinom ~ s(x1, k=12) + s(x2, k=12), family = nb, method 
 gam.check(negbin_model, rep = 500)
 
 
-## Model selection - shrinkage -----------------------------------------------------------##
+## Model selection - shrinkage -------------------------------------------------------------------##
 ## setup-shrinkage-example
 ## an example of automatic model selection via null space penalization
 set.seed(3)
@@ -133,4 +133,101 @@ plot_grid(p1, p2, p3, p4, p5, p6, ncol = 3, align = 'vh', labels = paste0('x', 1
 
 ## shrinkage-example-summary
 summary(b)
+## shrinkage-example-plot
+library('gratia'); draw(b, scales = 'fixed')
 
+## AIC ---------------------------------------------------------------------------------##
+data(co2s)
+head(co2s)
+ggplot(co2s, aes(x = c.month, y = co2)) + geom_line()
+b <- gam(co2 ~ s(c.month, k=300, bs="cr"), data = co2s, method = 'REML')
+summary(b)
+
+## previsão: com base nos dados que tem até agora, o que esse modelo acha que vai acontecer nos próximos 3 anos? ##
+pd <- with(co2s, data.frame(c.month = 1:(nrow(co2s)+36))) ## do mês 1 até o final dos dados + 36 após ## 
+pd <- cbind(pd, predict(b, pd, se = TRUE))
+pd <- transform(pd, upr = fit + (2*se.fit), lwr = fit - (2 * se.fit)) ## cria os intervalos de confiança para os valores preditivos ##
+ggplot(pd, aes(x = c.month, y = fit)) +
+    geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +
+    geom_line(data = co2s, aes(c.month, co2), col = 'red') +
+    geom_line(alpha = 0.5)
+## esse é um dos problemas do gam, ele não extrapola muito bem, ele vai apenas extrapolar linearmente, mesmo quando os dados não são ##
+## se usar o "cc" (suavizador ciclico) para o mês, então tem uma tendencia gradual para a previsão
+b2 <- gam(co2 ~ s(month, bs = "cc") + s(c.month, bs = "cr", k = 300),
+          data = co2s, method = 'REML',
+          knots = list(month = c(0.5, 12.5))) ## defini o nó = pontos finais para o cc ##
+summary(b2) ## p-value dos smooths deu significante ##
+## após, volta para a função de predisão
+nr <- nrow(co2s)
+pd2 <- with(co2s, data.frame(c.month = 1:(nr+36),
+                             month = rep(1:12, length.out=nr+36)))
+pd2 <- cbind(pd2, predict(b2, pd2, se = TRUE))
+pd2 <- transform(pd2, upr = fit + (2*se.fit), lwr = fit - (2 * se.fit))
+ggplot(pd2, aes(x = c.month, y = fit)) +
+    geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +
+    geom_line(data = co2s, aes(c.month, co2), col = 'red') +
+    geom_line(alpha = 0.5)
+## agora a previsão se encaixa melhor ##
+
+
+## Galveston full model -----------------------------------------------------------------##
+## 2:30:00 do vídeo 
+galveston <- read_csv(here('data', 'gbtemp.csv')) %>%
+    mutate(datetime = as.POSIXct(paste(DATE, TIME), format = '%m/%d/%y %H:%M', tz = "CDT"),
+           STATION_ID = factor(STATION_ID), DoY = as.numeric(format(datetime, format = '%j')),
+           ToD = as.numeric(format(datetime, format = '%H')) +
+               (as.numeric(format(datetime, format = '%M')) / 60))
+galveston
+
+knots <- list(DoY = c(0.5, 366.5)) ## organiza os anos ##
+##full model##
+m <- bam(MEASUREMENT ~
+             s(ToD, k = 10) +
+             s(DoY, k = 12, bs = 'cc') +
+             s(YEAR, k = 30) +
+             s(LONGITUDE, LATITUDE, k = 100, bs = 'ds', m = c(1, 0.5)) +
+             ti(DoY, YEAR, bs = c('cc', 'tp'), k = c(12, 15)) +
+             ti(LONGITUDE, LATITUDE, ToD, d = c(2,1), bs = c('ds','tp'),
+                m = list(c(1, 0.5), NA), k = c(20, 10)) +
+             ti(LONGITUDE, LATITUDE, DoY, d = c(2,1), bs = c('ds','cc'),
+                m = list(c(1, 0.5), NA), k = c(25, 12)) +
+             ti(LONGITUDE, LATITUDE, YEAR, d = c(2,1), bs = c('ds','tp'),
+                m = list(c(1, 0.5), NA), k = c(25, 15)),
+         data = galveston, method = 'fREML', knots = knots,
+         nthreads = c(4, 1), discrete = TRUE)
+         
+## simple model ##
+m.sub <- bam(MEASUREMENT ~
+             s(ToD, k = 10) +
+             s(DoY, k = 12, bs = 'cc') +
+             s(YEAR, k = 30) +
+             s(LONGITUDE, LATITUDE, k = 100, bs = 'ds', m = c(1, 0.5)) +
+             ti(DoY, YEAR, bs = c('cc', 'tp'), k = c(12, 15)),
+         data = galveston, method = 'fREML', knots = knots,
+         nthreads = c(4, 1), discrete = TRUE)
+
+AIC(m, m.sub)
+anova(m, m.sub, test = 'F') ## removendo as interações + complexas, o modelo fica significativamente pior ##
+summary(m) ## p-value da significante, o que quer dizer que as funções estão longe de ser funções planas ##
+plot(m, pages = 1, scheme = 2, shade = TRUE)
+draw(m, scales = 'free')
+
+## predições ##
+pdata <- with(galveston,
+              expand.grid(ToD = 12,
+                          DoY = 180,
+                          YEAR = seq(min(YEAR), max(YEAR), by = 1),
+                          LONGITUDE = seq(min(LONGITUDE), max(LONGITUDE), length = 100),
+                          LATITUDE  = seq(min(LATITUDE), max(LATITUDE), length = 100)))
+fit <- predict(m, pdata)
+ind <- exclude.too.far(pdata$LONGITUDE, pdata$LATITUDE,
+                       galveston$LONGITUDE, galveston$LATITUDE, dist = 0.1)
+fit[ind] <- NA
+pred <- cbind(pdata, Fitted = fit)
+
+plt <- ggplot(pred, aes(x = LONGITUDE, y = LATITUDE)) +
+    geom_raster(aes(fill = Fitted)) + facet_wrap(~ YEAR, ncol = 12) +
+    scale_fill_viridis(name = expression(degree*C), option = 'plasma', na.value = 'transparent') +
+    coord_quickmap() +
+    theme(legend.position = 'right')
+plt
