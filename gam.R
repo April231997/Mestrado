@@ -1,11 +1,12 @@
 ls()
 getwd()
-setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An·lises")
+setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An√°lises")
 dir()
 Salminus <- read.table("Salminus.txt", header=T)
 Salminus
 
 library('mgcv')
+
 model1 <- gam(CP ~ s(ANO), data = Salminus, method = 'REML')
 summary(model1)
 plot(model1)
