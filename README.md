@@ -1,8 +1,7 @@
 # Mestrado
 
 OBJETIVO:
-O objetivo geral deste projeto é testar empiricamente se houve um decréscimo no tamanho médio e peso corpóreo em espécies de peixes nativos da bacia do rio Paraná, mais  
-especificamente da porção do Alto Paraná, entre os anos de 1900 e 2018.
+O objetivo geral deste projeto é testar empiricamente se houve um decréscimo no tamanho médio e peso corpóreo em espécies de peixes nativos da bacia do rio Paraná, mais especificamente da porção do Alto Paraná, entre os anos de 1900 e 2018.
 
 VARIÁVEIS:
 O comprimento padrão (CP) e o peso (P) são as variáveis dependentes desse estudo. A principal variável explanatória é o ano da amostragem. Contudo, informações complementares de 
