@@ -231,3 +231,23 @@ plt <- ggplot(pred, aes(x = LONGITUDE, y = LATITUDE)) +
     coord_quickmap() +
     theme(legend.position = 'right')
 plt
+
+## tendencias ##
+pdata <- with(galveston,
+              expand.grid(ToD = 12,
+                          DoY = c(1, 90, 180, 270),
+                          YEAR = seq(min(YEAR), max(YEAR), length = 500),
+                          LONGITUDE = -94.8751,
+                          LATITUDE  = 29.50866))
+
+fit <- data.frame(predict(m, newdata = pdata, se.fit = TRUE))
+fit <- transform(fit, upper = fit + (2 * se.fit), lower = fit - (2 * se.fit))
+pred <- cbind(pdata, fit)
+
+plt2 <- ggplot(pred, aes(x = YEAR, y = fit, group = factor(DoY))) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), fill = 'grey', alpha = 0.5) +
+    geom_line() + facet_wrap(~ DoY, scales = 'free_y') +
+    labs(x = NULL, y = expression(Temperature ~ (degree * C)))
+plt2
+
+
