@@ -59,7 +59,7 @@ gam(y ~ s(x, k = 10), data = dat, method = "REML")
 ## Use the defaults
 gam(y ~ s(x), data = dat, method = "REML") 
 
-## Exercício
+## ExercÃ­cio
 gam_mod_k3 <- gam(accel ~ s(times, k = 3), data = mcycle)
 gam_mod_k20 <- gam(accel ~ s(times, k = 20), data = mcycle)
 par(mfrow = c(1, 2))
@@ -151,8 +151,8 @@ plot(mod_city4, pages = 1)
 ## A smooth may be linear and significant, non-linear and non-significant, 
 ## or one of each.
 
-## No exemplo, price é significante, mas tem edf 1, então é linear.
-## E lenght não é significante e não linear, pois o edf é 2
+## No exemplo, price Ã© significante, mas tem edf 1, entÃ£o Ã© linear.
+## E lenght nÃ£o Ã© significante e nÃ£o linear, pois o edf Ã© 2
 
 ## Visualizing GAMs ---------------------------------- ##
 mod <- gam(accel ~ s(times), data = mcycle, method = "REML")
