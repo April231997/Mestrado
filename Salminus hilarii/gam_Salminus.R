@@ -1,6 +1,6 @@
 ls()
 getwd()
-setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An·lises")
+setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An√°lises")
 dir()
 a <- read.table("Salminus.txt", header=T)
 str(a)
@@ -20,7 +20,7 @@ shapiro.test(a$CP) ## W = 0.8986, p-value = 0.03882     <-- S/ DIST. NORMAL
 shapiro.test(a$P)  ## W = 0.76286, p-value = 0.0002538  <-- S/ DIST. NORMAL
 shapiro.test(a$ANO)  ## W = 0.88312, p-value = 0.02014  <-- S/ DIST. NORMAL
 
-## Salminus geral - correlaÁ„o -----------------------------------------------##
+## Salminus geral - correla√ß√£o -----------------------------------------------##
 cor(a$ANO, a$CP) ## 0.2751821
 cor(a$ANO, a$P)  ## 0.2206498
 cor(a$ANO, a$CP, method="spearman") ## 0.3332311
@@ -35,7 +35,7 @@ gam_mod <- gam(CP ~ s(ANO), data = a, method = "REML", sp = 0.1)
 summary(gam_mod)
 plot(gam_mod, residuals = TRUE, 
      pch = 20, cex = 1, shade = TRUE, shade.col = "azure2",
-     xlab = "Ano", ylab = "Comprimento Padr„o",
+     xlab = "Ano", ylab = "Comprimento Padr√£o",
      shift = coef(gam_mod)[1], seWithMean = TRUE,
      rug = TRUE, se = TRUE)
 ## Resultado:
@@ -72,9 +72,9 @@ gam.check(gam_mod)
 ## indicate that k is too low, especially if edf is close to k'.
 ##
 ##         k'  edf k-index p-value
-## s(ANO) 9.00 1.77    0.83    0.16    <--- n„o deu significativo. N„o precisa ajustar k.
+## s(ANO) 9.00 1.77    0.83    0.16    <--- n√£o deu significativo. N√£o precisa ajustar k.
 
-## k est· okays, mas o hist n„o deu formato de sino.
+## k est√° okays, mas o hist n√£o deu formato de sino.
 
 
 
@@ -116,7 +116,7 @@ gam_b <- gam(CP ~ s(ANO, k = 7), data = b, method = "REML", sp = 0.1)
 summary(gam_b)
 plot(gam_b, residuals = TRUE, 
      pch = 20, cex = 1, shade = TRUE, shade.col = "azure2",
-     xlab = "Ano", ylab = "Comprimento Padr„o",
+     xlab = "Ano", ylab = "Comprimento Padr√£o",
      shift = coef(gam_b)[1], seWithMean = TRUE,
      rug = TRUE, se = TRUE)
 ## Resultado:
@@ -153,7 +153,7 @@ gam.check(gam_b)
 ##         k'  edf k-index p-value
 ## s(ANO) 6.00 1.53    1.06    0.54
 
-## k est· okays, mas o hist n„o deu formato de sino.
+## k est√° okays, mas o hist n√£o deu formato de sino.
 
 ## CP - Family = poisson ----------------------------------------------------##
 gam_b1 <- gam(CP ~ s(ANO, k = 7), data = b, family = "poisson", method = "REML", sp = 0.1)
@@ -192,7 +192,7 @@ gam.check(gam_b1)
 
 plot(gam_b1, residuals = TRUE, 
      pch = 20, cex = 1, shade = TRUE, shade.col = "azure2",
-     xlab = "Ano", ylab = "Comprimento Padr„o",
+     xlab = "Ano", ylab = "Comprimento Padr√£o",
      shift = coef(gam_b1)[1], seWithMean = TRUE,
      rug = TRUE, se = TRUE)
 
@@ -293,7 +293,7 @@ plot(gam_b2.2, residuals = TRUE,
      shift = coef(gam_b2.2)[1], seWithMean = TRUE,
      rug = TRUE, se = TRUE)
 
-## Family quasi, quaispoisson e gamma n„o deram p-value significante e 
+## Family quasi, quaispoisson e gamma n√£o deram p-value significante e 
 ## baixa Deviance explained 
 
 
