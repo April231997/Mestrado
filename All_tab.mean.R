@@ -1,6 +1,6 @@
 ls()
 getwd()
-setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An·lises")
+setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/An√°lises")
 dir()
 
 Aces <- read.table("Aceslacustris_Geral2.txt", header=T)
