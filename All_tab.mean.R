@@ -1,22 +1,9 @@
 ls()
 getwd()
-setwd("C:/Users/beaco/OneDrive/Documentos/Mestrado/Análises")
+setwd()
 dir()
 
-Aces <- read.table("Aceslacustris_Geral2.txt", header=T)
-str(Aces)
-Aces$CP
-Aces$P
-Aces$ANO
-Aces$longitude
-Aces$latitude
-Aces$Amb
-Aces$state
-
-length(Aces$CP)
-
-names(Aces)
-Aces
+Aces <- read.table("Aceslacustris.txt", header=T)
 
 summary(Aces)
 ##       CP              P               ANO          state               Amb              Longitude     
@@ -191,154 +178,6 @@ summary(model6.Aces.cp.lmer)
 
 
 
-model.Aces.cp.gam <- gam(CP ~ s(ANO, k = 21), data = Aces, method = "REML", sp = 0.0001)
-summary(model.Aces.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  12.8702     0.5254    24.5   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.507   0.149
-##
-## R-sq.(adj) =  0.209   Deviance explained = 54.2%
-## -REML = 166.74  Scale est. = 12.976    n = 47
-
-gam.check(model.Aces.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.827918e-06,-1.827918e-06]
-## (score 166.7415 & scale 12.97562).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.33    0.98
-
-
-
-model2.Aces.cp.gam <- gam(log(CP) ~ s(ANO, k = 21), data = Aces, method = "REML", sp = 0.0001)
-summary(model2.Aces.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.48984    0.05134   48.49   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.578   0.126
-##
-## R-sq.(adj) =  0.226   Deviance explained = 55.2%
-## -REML = 61.986  Scale est. = 0.1239    n = 47
-
-gam.check(model2.Aces.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.279008e-06,-1.279008e-06]
-## (score 61.98573 & scale 0.1238958).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##          k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.33    0.98
-
-
-
-model3.Aces.cp.gam <- gam(CP ~ s(ANO, k = 21), random=list(Amb=~1), data = Aces, method = "REML", sp = 0.0001)
-summary(model3.Aces.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  12.8702     0.5254    24.5   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.507   0.149
-##
-## R-sq.(adj) =  0.209   Deviance explained = 54.2%
-## -REML = 166.74  Scale est. = 12.976    n = 47
-
-gam.check(model3.Aces.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.827918e-06,-1.827918e-06]
-## (score 166.7415 & scale 12.97562).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.33    0.97
-
-
-
-model4.Aces.cp.gam <- gam(log(CP) ~ s(ANO, k = 21), random=list(Amb=~1), data = Aces, method = "REML", sp = 0.0001)
-summary(model4.Aces.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## Intercept)  2.48984    0.05134   48.49   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.578   0.126
-##
-## R-sq.(adj) =  0.226   Deviance explained = 55.2%
-## -REML = 61.986  Scale est. = 0.1239    n = 47
-
-gam.check(model4.Aces.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.279008e-06,-1.279008e-06]
-## (score 61.98573 & scale 0.1238958).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.33    0.98
-
-
-
 ## Acestrorhynchus lacustris_Geral - P --------------------------------------##
 
 model.Aces.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data = Aces)
@@ -475,172 +314,10 @@ summary(model6.Aces.p.lmer)
 
 
 
-model.Aces.p.gam <- gam(P ~ s(ANO, k = 21), data = Aces, method = "REML", sp = 0.0001)
-summary(model.Aces.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  39.360      4.124   9.543 4.42e-10 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 2.052  0.0379 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.345   Deviance explained = 62.1%
-## -REML = 260.24  Scale est. = 799.49    n = 47
-
-gam.check(model.Aces.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.964151e-07,-1.964151e-07]
-## (score 260.2357 & scale 799.4897).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.44       1
-
-
-
-model2.Aces.p.gam <- gam(log(P) ~ s(ANO, k = 21), data = Aces, method = "REML", sp = 0.0001)
-summary(model2.Aces.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(P) ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.204      0.158   20.28   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.413   0.189
-##
-## R-sq.(adj) =  0.179   Deviance explained = 52.5%
-## -REML = 112.54  Scale est. = 1.1739    n = 47
-
-gam.check(model2.Aces.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.760261e-06,-2.760261e-06]
-## (score 112.5412 & scale 1.173856).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.39    0.99
-
-
-
-model3.Aces.p.gam <- gam(P ~ s(ANO, k = 21), random=list(Amb=~1), data = Aces, method = "REML", sp = 0.0001)
-summary(model3.Aces.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  39.360      4.124   9.543 4.42e-10 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 2.052  0.0379 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.345   Deviance explained = 62.1%
-## -REML = 260.24  Scale est. = 799.49    n = 47
-
-gam.check(model3.Aces.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.964151e-07,-1.964151e-07]
-## (score 260.2357 & scale 799.4897).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.44    0.99
-
-
-
-model4.Aces.p.gam <- gam(log(P) ~ s(ANO, k = 21), random=list(Amb=~1), data = Aces, method = "REML", sp = 0.0001)
-summary(model4.Aces.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(P) ~ s(ANO, k = 21)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## Intercept)  3.204      0.158   20.28   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 19.39  19.94 1.413   0.189
-##
-## R-sq.(adj) =  0.179   Deviance explained = 52.5%
-## -REML = 112.54  Scale est. = 1.1739    n = 47
-
-gam.check(model4.Aces.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.760261e-06,-2.760261e-06]
-## (score 112.5412 & scale 1.173856).
-## Hessian positive definite, eigenvalue range [22.5,22.5].
-## Model rank =  21 / 21 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 20.0 19.4    1.39    0.99
-
-
-
 ##----------------------------------------------------------------------------##
 
-
-
-Aces2 <- filter(Aces, Amb == "Pequeno")
-Aces3 <- filter(Aces, Amb == "Grande")
-
-str(Aces2)
-Aces2$CP
-Aces2$P
-Aces2$ANO
-Aces2$Longitude
-Aces2$Latitude
-Aces2$Amb
+Aces2 <- filter(Aces, Amb == "Grande")
+Aces3 <- filter(Aces, Amb == "Pequeno")
 
 summary(Aces2)
 ##        CP              P               ANO          state               Amb              Longitude     
@@ -663,14 +340,14 @@ summary(Aces2)
 
 
 
-## Acestrorhynchus lacustris_AmbPeque - teste de normalidade -----------------##
+## Acestrorhynchus lacustris_AmbGran - teste de normalidade -----------------##
 shapiro.test(Aces2$CP) ## W = 0.93262, p-value = 0.04635 
 shapiro.test(Aces2$P)  ## W = 0.83791, p-value = 0.0002296 
 shapiro.test(Aces2$ANO) ## W = 0.89371, p-value = 0.004299 
 
 
 
-## Acestrorhynchus lacustris_AmbPeque - cor e cov ----------------------------##
+## Acestrorhynchus lacustris_AmbGran - cor e cov ----------------------------##
 cor(Aces2$ANO, Aces2$CP) ## 0.1209257
 cor(Aces2$ANO, Aces2$P)  ## 0.0516827
 cor(Aces2$ANO, Aces2$CP, method="spearman") ## 0.1993202
@@ -681,49 +358,7 @@ cov(Aces2$ANO, Aces2$P)  ## 18.21079
 
 
 
-## Acestrorhynchus lacustris_AmbPeque - CP -----------------------------------##
-
-model.Aces2.cp.gamm<-gamm(CP~s(ANO), data=Aces2)
-summary(model.Aces2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  13.3844     0.7207   18.57   <2e-16 ***
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-## s(ANO)   1      1 0.46   0.503
-##
-## R-sq.(adj) =  -0.0182   
-## Scale est. = 16.102    n = 32
-
-model2.Aces2.cp.gamm<-gamm(log(CP)~s(ANO), data=Aces2)
-summary(model2.Aces2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-## Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.53120    0.06995   36.19   <2e-16 ***
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.458   0.504
-##
-## R-sq.(adj) =  -0.0183   
-## Scale est. = 0.15167   n = 32
+## Acestrorhynchus lacustris_AmbGran - CP -----------------------------------##
 
 model3.Aces2.cp.lm<-lm(CP~ANO, data = Aces2)
 summary(model3.Aces2.cp.lm)
@@ -837,49 +472,7 @@ gam.check(model2.Aces2.cp.gam)
 
 
 
-## Acestrorhynchus lacustris_AmbPeque - P ------------------------------------##
-
-model.Aces2.p.gamm<-gamm(P~s(ANO), data = Aces2)
-summary(model.Aces2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   43.303      6.457   6.707 1.97e-07 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.083   0.775
-##
-## R-sq.(adj) =  -0.0306   
-## Scale est. = 1292.4    n = 32
-
-model2.Aces2.p.gamm<-gamm(log(P)~s(ANO), data=Aces2)
-summary(model2.Aces2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   3.2992     0.2204   14.97 1.86e-15 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.135   0.716
-##
-## R-sq.(adj) =  -0.0289   
-## Scale est. = 1.5061    n = 32
+## Acestrorhynchus lacustris_AmbGran - P ------------------------------------##
 
 model3.Aces2.p.lm<-lm(P~ANO, data = Aces2)
 summary(model3.Aces2.p.lm)
@@ -1011,14 +604,14 @@ summary(Aces3)
 ## 3rd Qu.:-20.61  
 ## Max.   :-20.27
 
-## Acestrorhynchus lacustris_AmbGran - teste de normalidade -----------------##
+## Acestrorhynchus lacustris_AmbPeque - teste de normalidade -----------------##
 shapiro.test(Aces3$CP) ## W = 0.90021, p-value = 0.09589 
 shapiro.test(Aces3$P)  ## W = 0.6872, p-value = 0.0001819
 shapiro.test(Aces3$ANO) ## W = 0.83745, p-value = 0.01159  
 
 
 
-## Acestrorhynchus lacustris_AmbGran - cor e cov ----------------------------##
+## Acestrorhynchus lacustris_AmbPeque - cor e cov ----------------------------##
 cor(Aces3$ANO, Aces3$CP) ## -0.05651074
 cor(Aces3$ANO, Aces3$P)  ## -0.1300188
 cor(Aces3$ANO, Aces3$CP, method="spearman") ## -0.2017938
@@ -1029,49 +622,7 @@ cov(Aces3$ANO, Aces3$P)  ## -47.36333
 
 
 
-## Acestrorhynchus lacustris_AmbGran - CP -----------------------------------##
-
-model.Aces3.cp.gamm<-gamm(CP~s(ANO), data=Aces3)
-summary(model.Aces3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-## 
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  11.7733     0.9872   11.93 2.25e-08 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.045   0.836
-##
-## R-sq.(adj) =  -0.0735   
-## Scale est. = 13.644    n = 15
-
-model2.Aces3.cp.gamm<-gamm(log(CP)~s(ANO), data=Aces3)
-summary(model2.Aces3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.4016     0.1039   23.12 6.07e-12 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-## s(ANO)   1      1 0.01   0.924
-##
-## R-sq.(adj) =  -0.0762   
-## Scale est. = 0.1511    n = 15
+## Acestrorhynchus lacustris_AmbPeque - CP -----------------------------------##
 
 model3.Aces3.cp.lm<-lm(CP~ANO, data = Aces3)
 summary(model3.Aces3.cp.lm)
@@ -1127,9 +678,8 @@ summary(model.Aces3.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.81  10.99 59.06 0.00315 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.81  10.99 59.06 0.315
+
 
 gam.check(model.Aces3.cp.gam)
 ## Method: REML   Optimizer: outer newton
@@ -1163,12 +713,8 @@ summary(model2.Aces3.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.81  10.99 74.08 0.00226 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.983   Deviance explained = 99.6%
-## -REML =  14.94  Scale est. = 0.0027166  n = 15
+## s(ANO) 10.81  10.99 74.08 0.226
+
 
 gam.check(model2.Aces3.cp.gam)
 ## Method: REML   Optimizer: outer newton
@@ -1186,49 +732,7 @@ gam.check(model2.Aces3.cp.gam)
 
 
 
-## Acestrorhynchus lacustris_AmbGran - P -------------------------------------##
-
-model.Aces3.p.gamm<-gamm(P~s(ANO), data = Aces3)
-summary(model.Aces3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   30.947      7.828   3.953  0.00165 **
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.241   0.632
-##
-## R-sq.(adj) =  -0.0587   
-## Scale est. = 857.92    n = 15
-
-model2.Aces3.p.gamm<-gamm(log(P)~s(ANO), data=Aces3)
-summary(model2.Aces3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   3.0024     0.2801   10.72 7.99e-08 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.007   0.935
-##
-## R-sq.(adj) =  -0.0764   
-## Scale est. = 1.0983    n = 15
+## Acestrorhynchus lacustris_AmbPeque - P -------------------------------------##
 
 model3.Aces3.p.lm<-lm(P~ANO, data = Aces3)
 summary(model3.Aces3.p.lm)
@@ -1321,9 +825,7 @@ summary(model2.Aces3.p.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.81  10.99 94.8 0.00156 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.81  10.99 94.8 0.156
 ##
 ## R-sq.(adj) =  0.987   Deviance explained = 99.7%
 ## -REML = 28.838  Scale est. = 0.015332  n = 15
@@ -1348,17 +850,7 @@ gam.check(model2.Aces3.p.gam)
 ## ---------------------------------------------------------------------------##
                              ## C.callichthys ##
 
-dir()
-Calli <- read.table("C.callichthys_Geral2.txt", header=T)
-str(Calli)
-Calli$CP
-Calli$P
-Calli$ANO
-Calli$Longitude
-Calli$Latitude
-Calli$Amb
-Calli$state
-
+Calli <- read.table("C.callichthys.txt", header=T)
 
 summary(Calli)
 ##       CP               P               ANO          state               Amb              Longitude     
@@ -1527,84 +1019,6 @@ summary(model6.Calli.cp.lmer)
 
 
 
-model.Calli.cp.gam <- gam(CP ~ s(ANO, k = 15), data = Calli, method = "REML", sp = 0.0001)
-summary(model.Calli.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 15)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  6.2000     0.3118   19.89   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 6.14  7.223 2.64    0.03 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =   0.31   Deviance explained = 42.5%
-## -REML = 85.928  Scale est. = 3.6936    n = 38
-
-gam.check(model.Calli.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-5.999133e-05,-5.999133e-05]
-## (score 85.92845 & scale 3.693618).
-## Hessian positive definite, eigenvalue range [18.00006,18.00006].
-## Model rank =  15 / 15 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##          k'   edf k-index p-value
-## s(ANO) 14.00  6.14    1.13    0.78
-
-
-
-model2.Calli.cp.gam <- gam(log(CP) ~ s(ANO, k = 15), data = Calli, method = "REML", sp = 0.0001)
-summary(model2.Calli.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 15)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.75343    0.05362    32.7   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 6.14  7.223 2.343  0.0498 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.281   Deviance explained =   40%
-## -REML = 22.529  Scale est. = 0.10925   n = 38
-
-gam.check(model2.Calli.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.231602e-10,-2.231602e-10]
-## (score 22.52864 & scale 0.1092504).
-## Hessian positive definite, eigenvalue range [18,18].
-## Model rank =  15 / 15 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##          k'   edf k-index p-value
-## s(ANO) 14.00  6.14    1.02    0.47
-
-
-
 ## C.callichthys_Geral - P ---------------------------------------------------##
 
 model.Calli.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data = Calli)
@@ -1737,99 +1151,10 @@ summary(model6.Calli.p.lmer)
 
 
 
-model.Calli.p.gam <- gam(P ~ s(ANO, k = 12), data = Calli, method = "REML", sp = 0.001)
-summary(model.Calli.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO, k = 12)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.884      1.326   8.206 7.73e-09 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 9.777  10.58 3.208 0.00799 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.402   Deviance explained =   56%
-## -REML = 147.56  Scale est. = 66.86     n = 38
-
-gam.check(model.Calli.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.173196e-06,-1.173196e-06]
-## (score 147.5567 & scale 66.85995).
-## Hessian positive definite, eigenvalue range [18,18].
-## Model rank =  12 / 12 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##          k'   edf k-index p-value
-## s(ANO) 11.00  9.78    1.39    0.98
-
-
-
-model2.Calli.p.gam <- gam(log(P) ~ s(ANO, k = 14), data = Calli, method = "REML", sp = 0.0001)
-summary(model2.Calli.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(P) ~ s(ANO, k = 14)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.8369     0.1589   11.56 1.96e-11 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 12.39  12.91 2.149  0.0501 .
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.304   Deviance explained = 53.7%
-## -REML = 79.946  Scale est. = 0.95986   n = 38
-
-gam.check(model2.Calli.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.959481e-06,-1.959481e-06]
-## (score 79.94615 & scale 0.9598554).
-## Hessian positive definite, eigenvalue range [18,18].
-## Model rank =  14 / 14 
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-## 
-##        k'  edf k-index p-value
-## s(ANO) 13.0 12.4    1.05    0.54
-
-
-
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Calli2 <- filter(Calli, Amb == "Grande")
-Calli3 <- filter(Calli, Amb == "Pequeno")
-
-
-Calli2$CP
-Calli2$P
-Calli2$ANO
-Calli2$Longitude
-Calli2$Latitude
-Calli2$Amb
-
-Calli2
+Calli2 <- filter(Calli, Amb == "Pequeno")
+Calli3 <- filter(Calli, Amb == "Grande")
 
 summary(Calli2)
 ##       CP               P              ANO          state               Amb              Longitude     
@@ -1847,13 +1172,13 @@ summary(Calli2)
 ## 3rd Qu.:-20.82  
 ## Max.   : 20.83
 
-## C.callichthys_AmbGran - teste de normalidade ------------------------------##
+## C.callichthys_AmbPeque - teste de normalidade ------------------------------##
 shapiro.test(Calli2$CP) ## W = 0.98445, p-value = 0.9569
 shapiro.test(Calli2$P)  ## W = 0.88785, p-value = 0.01007
 shapiro.test(Calli2$ANO) ## W = 0.83766, p-value = 0.001036
 
 
-## C.callichthys_AmbGran - cor e cov -----------------------------------------##
+## C.callichthys_AmbPeque - cor e cov -----------------------------------------##
 cor(Calli2$ANO, Calli2$CP) ## -0.1432591
 cor(Calli2$ANO, Calli2$P)  ## -0.2831597
 cor(Calli2$ANO, Calli2$CP, method="spearman") ## 0.026929
@@ -1863,51 +1188,7 @@ cov(Calli2$ANO, Calli2$CP) ## -1.485167
 cov(Calli2$ANO, Calli2$P)  ## -13.93033
 
 
-## C.callichthys_AmbGran - CP ------------------------------------------------##
-
-model.Calli2.cp.gamm<-gamm(CP~s(ANO), data=Calli2)
-summary(model.Calli2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##            Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   6.6320     0.3673   18.06  1.2e-14 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value  
-## s(ANO) 2.075  2.075 3.808   0.038 *
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.237   
-## Scale est. = 3.2375    n = 25
-
-model2.Calli2.cp.gamm<-gamm(log(CP)~s(ANO), data=Calli2)
-summary(model2.Calli2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-## 
-## Parametric coefficients:
-##         Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.83964    0.06243   29.46   <2e-16 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 1.839  1.839 2.158   0.179
-##
-## R-sq.(adj) =  0.133   
-## Scale est. = 0.093553  n = 25
+## C.callichthys_AmbPeque - CP ------------------------------------------------##
 
 model3.Calli2.cp.lm<-lm(CP~ANO, data = Calli2)
 summary(model3.Calli2.cp.lm)
@@ -2025,51 +1306,7 @@ gam.check(model2.Calli2.cp.gam)
 
 
 
-## C.callichthys_AmbGran - P -------------------------------------------------##
-
-model.Calli2.p.gamm<-gamm(P~s(ANO), data = Calli2)
-summary(model.Calli2.p.gamm$gam)
-##Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   12.284      1.587    7.74 1.11e-07 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value   
-## s(ANO) 2.275  2.275 6.14 0.00574 **
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.367   
-## Scale est. = 60.447    n = 25
-
-model2.Calli2.p.gamm<-gamm(log(P)~s(ANO), data=Calli2)
-summary(model2.Calli2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-## 
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.1335     0.1836   11.62 6.22e-11 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-## s(ANO) 1.715  1.715 1.63   0.295
-##
-## R-sq.(adj) =  0.0964   
-## Scale est. = 0.80864   n = 25
+## C.callichthys_AmbPeque - P -------------------------------------------------##
 
 model3.Calli2.p.lm<-lm(P~ANO, data = Calli2)
 summary(model3.Calli2.p.lm)
@@ -2193,17 +1430,6 @@ gam.check(model2.Calli2.p.gam)
 
 ##----------------------------------------------------------------------------##
 
-str(Calli3)
-Calli3$CP
-Calli3$P
-Calli3$ANO
-Calli3$Longitude
-Calli3$Latitude
-Calli3$Amb
-
-Calli3
-
-
 summary(Calli3)
 ##        CP               P               ANO          state               Amb              Longitude     
 ## Min.   : 2.900   Min.   : 1.000   Min.   :1968   Length:13          Length:13          Min.   :-52.17  
@@ -2224,13 +1450,13 @@ summary(Calli3)
 
 
 
-## C.callichthys_AmbPeque - teste de normalidade -----------------------------##
+## C.callichthys_AmbGran - teste de normalidade -----------------------------##
 shapiro.test(Calli3$CP) ##  W = 0.87308, p-value = 0.05752
 shapiro.test(Calli3$P)  ##  W = 0.70001, p-value = 0.0005551
 shapiro.test(Calli3$ANO) ## W = 0.75984, p-value = 0.002362
 
 
-## C.callichthys_AmbPeque - cor e cov ----------------------------------------##
+## C.callichthys_AmbGran - cor e cov ----------------------------------------##
 cor(Calli3$ANO, Calli3$CP) ## 0.1414498
 cor(Calli3$ANO, Calli3$P)  ## 0.2119638
 cor(Calli3$ANO, Calli3$CP, method="spearman") ## 0.3139699
@@ -2240,49 +1466,7 @@ cov(Calli3$ANO, Calli3$CP) ## 4.320513
 cov(Calli3$ANO, Calli3$P)  ## 29.28013
 
 
-## C.callichthys_AmbPeque - CP -----------------------------------------------##
-
-model.Calli3.cp.gamm<-gamm(CP~s(ANO), data=Calli3)
-summary(model.Calli3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   5.3692     0.6502   8.258 6.56e-06 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 1.509  1.509 0.421   0.494
-##
-## R-sq.(adj) =  0.0906   
-## Scale est. = 5.0731    n = 13
-
-model2.Calli3.cp.gamm<-gamm(log(CP)~s(ANO), data=Calli3)
-summary(model2.Calli3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   1.5876     0.1121   14.17 3.89e-08 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 1.593  1.593 0.637   0.436
-##
-## R-sq.(adj) =  0.114   
-## Scale est. = 0.15071   n = 13
+## C.callichthys_AmbGran - CP -----------------------------------------------##
 
 model3.Calli3.cp.lm<-lm(CP~ANO, data = Calli3)
 summary(model3.Calli3.cp.lm)
@@ -2396,49 +1580,7 @@ gam.check(model2.Calli3.cp.gam)
 
 
 
-## C.callichthys_AmbPeque - P ------------------------------------------------##
-
-model.Calli3.p.gamm<-gamm(P~s(ANO), data = Calli3)
-summary(model.Calli3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    8.192      3.022   2.711   0.0206 *
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 1.238  1.238 0.305   0.526
-## 
-## R-sq.(adj) =  0.0256   
-## Scale est. = 109.56    n = 13
-
-model2.Calli3.p.gamm<-gamm(log(P)~s(ANO), data=Calli3)
-summary(model2.Calli3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   1.2665     0.3594   3.524  0.00499 **
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-## s(ANO) 1.34   1.34 0.18   0.731
-##
-## R-sq.(adj) =  0.014   
-## Scale est. = 1.5497    n = 13
+## C.callichthys_AmbGran - P ------------------------------------------------##
 
 model3.Calli3.p.lm<-lm(P~ANO, data = Calli3)
 summary(model3.Calli3.p.lm)
@@ -2555,19 +1697,7 @@ gam.check(model2.Calli3.p.gam)
 ## ---------------------------------------------------------------------------##
                               ## H.malabaricus ##
 
-dir()
-Mala <- read.table("H.malabaricus_Geral2.txt", header=T)
-
-str(Mala)
-Mala$CP
-Mala$P
-Mala$ANO
-Mala$Longitude
-Mala$Latitude
-Mala$Amb
-Mala$state
-
-Mala
+Mala <- read.table("H.malabaricus.txt", header=T)
 
 summary(Mala)
 ##       CP              P                ANO          state               Amb              Longitude     
@@ -2589,12 +1719,12 @@ summary(Mala)
 
 
 
-## H.malabaricus_Geral2 - teste de normalidade ----------------------------------##
+## H.malabaricus_Geral - teste de normalidade ----------------------------------##
 shapiro.test(Mala$CP) ## W = 0.939, p-value = 5.231e-08
 shapiro.test(Mala$P)  ## W = 0.6436, p-value < 2.2e-16
 shapiro.test(Mala$ANO) ## W = 0.82699, p-value = 5.394e-15
 
-## H.malabaricus_Geral2 - cor e cov ---------------------------------------------##
+## H.malabaricus_Geral - cor e cov ---------------------------------------------##
 cor(Mala$ANO, Mala$CP) ## 0.03034292
 cor(Mala$ANO, Mala$P)  ## 0.009416907
 cor(Mala$ANO, Mala$CP, method="spearman") ## 0.04387951
@@ -2605,7 +1735,7 @@ cov(Mala$ANO, Mala$P)  ## 4.465138
 
 
 
-## H.malabaricus_Geral2 - CP ----------------------------------------------------##
+## H.malabaricus_Geral - CP ----------------------------------------------------##
 
 model.Mala.cp.gamm<-gamm(CP~s(ANO), random=list(Amb=~1), data=Mala)
 summary(model.Mala.cp.gamm$gam)
@@ -2745,85 +1875,7 @@ summary(model6.Mala.cp.lmer)
 
 
 
-model.Mala.cp.gam <- gam(CP ~ s(ANO, k = 30), data = Mala, method = "REML", sp = 0.0001)
-summary(model.Mala.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 30)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.2268     0.2928   34.92   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 28.95     29 1.522  0.0514 .
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0646   Deviance explained = 18.7%
-## -REML = 746.65  Scale est. = 19.036    n = 222
-
-gam.check(model.Mala.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.178031e-08,-2.178031e-08]
-## (score 746.6544 & scale 19.03614).
-## Hessian positive definite, eigenvalue range [110,110].
-## Model rank =  30 / 30 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 29.0 28.9    1.05    0.76
-
-
-
-model2.Mala.cp.gam <- gam(log(CP) ~ s(ANO, k = 30), data = Mala, method = "REML", sp = 0.0001)
-summary(model2.Mala.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 30)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.23123    0.02855   78.14   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 28.95     29 1.435  0.0806 .
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0544   Deviance explained = 17.8%
-## -REML = 234.52  Scale est. = 0.18099   n = 222
-
-gam.check(model2.Mala.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.61998e-08,-2.61998e-08]
-## (score 234.519 & scale 0.1809916).
-## Hessian positive definite, eigenvalue range [110,110].
-## Model rank =  30 / 30 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 29.0 28.9    1.03    0.66
-
-
-
-## H.malabaricus_Geral2 - P -----------------------------------------------------##
+## H.malabaricus_Geral - P -----------------------------------------------------##
 
 model.Mala.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data=Mala)
 summary(model.Mala.p.gamm$gam)
@@ -2959,100 +2011,11 @@ summary(model6.Mala.p.lmer)
 
 
 
-model.Mala.p.gam <- gam(P ~ s(ANO, k = 30), data = Mala, method = "REML", sp = 0.001)
-summary(model.Mala.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO, k = 30)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  41.570      3.936   10.56   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 28.49  28.97 1.56  0.0426 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0733   Deviance explained = 19.3%
-## -REML =   1287  Scale est. = 3439.5    n = 222
-
-gam.check(model.Mala.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.056056e-08,-2.056056e-08]
-## (score 1286.957 & scale 3439.453).
-## Hessian positive definite, eigenvalue range [110,110].
-## Model rank =  30 / 30 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 29.0 28.5     1.1    0.94
-
-
-
-model2.Mala.p.gam <- gam(log(P) ~ s(ANO, k = 30), data = Mala, method = "REML", sp = 0.001)
-summary(model2.Mala.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(P) ~ s(ANO, k = 30)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.88142    0.09099   31.67   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 28.49  28.97 1.25   0.196
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0349   Deviance explained = 15.9%
-## -REML = 457.98  Scale est. = 1.838     n = 222
-
-gam.check(model2.Mala.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-3.981592e-08,-3.981592e-08]
-## (score 457.9814 & scale 1.838027).
-## Hessian positive definite, eigenvalue range [110,110].
-## Model rank =  30 / 30 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 29.0 28.5    1.02    0.59
-
-
-
 ##----------------------------------------------------------------------------##
 
 
-Mala2 <- filter(Mala, Amb == "Grande")
-Mala3 <- filter(Mala, Amb == "Pequeno")
-
-str(Mala)
-Mala2$CP
-Mala2$P
-Mala2$ANO
-Mala2$Longitude
-Mala2$Latitude
-Mala2$Amb
-Mala2$state
-
-Mala2
+Mala2 <- filter(Mala, Amb == "Pequeno")
+Mala3 <- filter(Mala, Amb == "Grande")
 
 summary(Mala2)
 ##       CP              P                ANO          state               Amb              Longitude     
@@ -3073,14 +2036,14 @@ summary(Mala2)
 
 
 
-## H.malabaricus_AmbGran - teste de normalidade ------------------------------##
+## H.malabaricus_AmbPeque - teste de normalidade ------------------------------##
 shapiro.test(Mala2$CP) ## W = 0.95067, p-value = 0.0001646
 shapiro.test(Mala2$P)  ## W = 0.59345, p-value < 2.2e-16
 shapiro.test(Mala2$ANO) ## W = 0.78565, p-value = 2.766e-12
 
 
 
-## H.malabaricus_AmbGran - cor e cov -----------------------------------------##
+## H.malabaricus_AmbPeque - cor e cov -----------------------------------------##
 cor(Mala2$ANO, Mala2$CP) ## 0.02969961
 cor(Mala2$ANO, Mala2$P)  ## -0.002306962
 cor(Mala2$ANO, Mala2$CP, method="spearman") ## -0.03300317
@@ -3091,49 +2054,7 @@ cov(Mala2$ANO, Mala2$P)  ## -0.9979111
 
 
 
-## H.malabaricus_AmbGran- CP -------------------------------------------------##
-
-model.Mala2.cp.gamm<-gamm(CP~s(ANO), data=Mala2)
-summary(model.Mala2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-## 
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.0262     0.3644   27.52   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-## s(ANO)   1      1 0.11    0.74
-##
-## R-sq.(adj) =  -0.00718   
-## Scale est. = 16.598    n = 126
-
-model2.Mala2.cp.gamm<-gamm(log(CP)~s(ANO), data=Mala2)
-summary(model2.Mala2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.22371    0.03653   60.88   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.242   0.624
-##
-## R-sq.(adj) =  -0.00612   
-## Scale est. = 0.16679   n = 126
+## H.malabaricus_AmbPeque- CP -------------------------------------------------##
 
 model3.Mala2.cp.lm<-lm(CP~ANO, data = Mala2)
 summary(model3.Mala2.cp.lm)
@@ -3247,49 +2168,7 @@ gam.check(model2.Mala2.cp.gam)
 
 
 
-## H.malabaricus_AmbGran - P -------------------------------------------------##
-
-model.Mala2.p.gamm<-gamm(P~s(ANO), data = Mala2)
-summary(model.Mala2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   37.629      5.121   7.348 2.36e-11 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.001   0.979
-##
-## R-sq.(adj) =  -0.00806   
-## Scale est. = 3278.3    n = 126
-
-model2.Mala2.p.gamm<-gamm(log(P)~s(ANO), data=Mala2)
-summary(model2.Mala2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    2.835      0.117   24.23   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.174   0.677
-##
-## R-sq.(adj) =  -0.00666   
-## Scale est. = 1.7114    n = 126
+## H.malabaricus_AmbPeque - P -------------------------------------------------##
 
 model3.Mala2.p.lm<-lm(P~ANO, data = Mala2)
 summary(model3.Mala2.p.lm)
@@ -3405,12 +2284,7 @@ gam.check(model2.Mala2.p.gam)
 
 ##----------------------------------------------------------------------------##
 
-Mala3$CP
-Mala3$P
-Mala3$ANO
-Mala3$Longitude
-Mala3$Latitude
-Mala3$Amb
+Mala3
 
 summary(Mala3)
 ##       CP              P               ANO          state               Amb              Longitude     
@@ -3433,14 +2307,14 @@ summary(Mala3)
 
 
 
-## H.malabaricus_AmbPeque - teste de normalidade -----------------------------##
+## H.malabaricus_AmbGran - teste de normalidade -----------------------------##
 shapiro.test(Mala3$CP) ##  W = 0.92864, p-value = 5.902e-05
 shapiro.test(Mala3$P)  ## W = 0.69115, p-value = 6.553e-13
 shapiro.test(Mala3$ANO) ## W = 0.81691, p-value = 1.462e-09
 
 
 
-## H.malabaricus_AmbPeque - cor e cov ----------------------------------------##
+## H.malabaricus_AmbGran - cor e cov ----------------------------------------##
 cor(Mala3$ANO, Mala3$CP) ## 0.01653931
 cor(Mala3$ANO, Mala3$P)  ## -0.0007087565
 cor(Mala3$ANO, Mala3$CP, method="spearman") ## 0.1562987
@@ -3451,49 +2325,7 @@ cov(Mala3$ANO, Mala3$P)  ## -0.3672807
 
 
 
-## H.malabaricus_AmbPeque - CP -----------------------------------------------##
-
-model.Mala3.cp.gamm<-gamm(CP~s(ANO), data=Mala3)
-summary(model.Mala3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.4901     0.4942   21.23   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 2.641  2.641 3.112   0.145
-##
-## R-sq.(adj) =  0.0663   
-## Scale est. = 23.198    n = 96
-
-model2.Mala3.cp.gamm<-gamm(log(CP)~s(ANO), data=Mala3)
-summary(model2.Mala3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.24110    0.04817   46.52   <2e-16 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.278   0.599
-##
-## R-sq.(adj) =  -0.00769   
-## Scale est. = 0.22046   n = 96
+## H.malabaricus_AmbGran - CP -----------------------------------------------##
 
 model3.Mala3.cp.lm<-lm(CP~ANO, data = Mala3)
 summary(model3.Mala3.cp.lm)
@@ -3549,9 +2381,7 @@ summary(model.Mala3.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 22.96  23.85 1.743  0.0275 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 22.96  23.85 1.743  0.275
 ##
 ## R-sq.(adj) =    0.2   Deviance explained = 39.4%
 ## -REML = 328.28  Scale est. = 20.14     n = 96
@@ -3609,49 +2439,7 @@ gam.check(model2.Mala3.cp.gam)
 
 
 
-## H.malabaricus_AmbPeque - P ------------------------------------------------##
-
-model.Mala3.p.gamm<-gamm(P~s(ANO), data = Mala3)
-summary(model.Mala3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   46.742      6.437   7.261 1.18e-10 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 2.545  2.545 2.783   0.197
-##
-## R-sq.(adj) =  0.0586   
-## Scale est. = 3936.9    n = 96
-
-model2.Mala3.p.gamm<-gamm(log(P)~s(ANO), data=Mala3)
-summary(model2.Mala3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.9418     0.1495   19.68   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.266   0.608
-##
-## R-sq.(adj) =  -0.00782   
-## Scale est. = 2.1228    n = 96
+## H.malabaricus_AmbGran - P ------------------------------------------------##
 
 model3.Mala3.p.lm<-lm(P~ANO, data = Mala3)
 summary(model3.Mala3.p.lm)
@@ -3707,9 +2495,7 @@ summary(model.Mala3.p.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 22.96  23.85 3.199 5.13e-05 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 22.96  23.85 3.199 0.5 
 ##
 ## R-sq.(adj) =  0.391   Deviance explained = 53.8%
 ## -REML = 557.29  Scale est. = 2581.5    n = 96
@@ -3770,18 +2556,7 @@ gam.check(model2.Mala3.p.gam)
 ##----------------------------------------------------------------------------##
                                 ## L.friderici ## 
 
-dir()
-
-Frid <- read.table("L.friderici_Geral2.txt", header=T)
-str(Frid)
-Frid$CP
-Frid$P
-Frid$ANO
-Frid$Longitude
-Frid$Latitude
-Frid$Amb
-
-Frid
+Frid <- read.table("L.friderici.txt", header=T)
 
 summary(Frid)
 ##       CP              P                ANO          state               Amb              Longitude     
@@ -3952,81 +2727,6 @@ summary(model6.Frid.cp.lmer)
 
 
 
-model.Frid.cp.gam <- gam(CP ~ s(ANO, k = 20), data = Frid, method = "REML", sp = 0.001)
-summary(model.Frid.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 20)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.5093     0.7576   13.87 6.25e-13 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 18.09  18.86 0.998   0.515
-##
-## R-sq.(adj) =  0.038   Deviance explained = 45.2%
-## -REML = 163.12  Scale est. = 24.68     n = 43
-
-gam.check(model.Frid.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.070393e-05,-2.070393e-05]
-## (score 163.1234 & scale 24.68015).
-## Hessian positive definite, eigenvalue range [20.50002,20.50002].
-## Model rank =  20 / 20 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 19.0 18.1    0.84    0.12
-
-
-
-model2.Frid.cp.gam <- gam(log(CP) ~ s(ANO, k = 20), data = Frid, method = "REML", sp = 0.0001)
-summary(model2.Frid.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 20)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.23099    0.07516   29.68   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 18.89     19 1.142   0.379
-##
-## R-sq.(adj) =  0.0655   Deviance explained = 48.6%
-## -REML = 87.042  Scale est. = 0.2429    n = 43
-
-gam.check(model2.Frid.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-5.79151e-06,-5.79151e-06]
-## (score 87.04228 & scale 0.2428979).
-## Hessian positive definite, eigenvalue range [20.50001,20.50001].
-## Model rank =  20 / 20 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value  
-## s(ANO) 19.0 18.9    0.82    0.06 .
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
 
 ## L.friderici_Geral - P -----------------------------------------------------##
 
@@ -4160,95 +2860,11 @@ summary(model6.Frid.p.lmer)
 
 
 
-model.Frid.p.gam <- gam(P ~ s(ANO, k = 20), data = Frid, method = "REML", sp = 0.001)
-summary(model.Frid.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 20)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  50.98      10.03   5.081 3.42e-05 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 18.09  18.86 0.789   0.717
-##
-## R-sq.(adj) =  -0.0638   Deviance explained = 39.4%
-## -REML = 268.82  Scale est. = 4327.8    n = 43
-
-gam.check(model.Frid.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-5.433724e-05,-5.433724e-05]
-## (score 268.8238 & scale 4327.822).
-## Hessian positive definite, eigenvalue range [20.50005,20.50005].
-## Model rank =  20 / 20 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 19.0 18.1    0.95     0.3
-
-
-
-model2.Frid.p.gam <- gam(log(P) ~ s(ANO, k = 20), data = Frid, method = "REML", sp = 0.0001)
-summary(model2.Frid.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 20)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.9592     0.2354   12.57 8.13e-12 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 18.89     19 1.086   0.423
-##
-## R-sq.(adj) =  0.0427   Deviance explained = 47.3%
-## -REML = 133.85  Scale est. = 2.3822    n = 43
-
-gam.check(model2.Frid.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-7.756159e-06,-7.756159e-06]
-## (score 133.8454 & scale 2.382225).
-## Hessian positive definite, eigenvalue range [20.50001,20.50001].
-## Model rank =  20 / 20 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value  
-## s(ANO) 19.0 18.9    0.82   0.075 .
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
 
 ##----------------------------------------------------------------------------##
 
-Frid2 <- filter(Frid, Amb == "Grande")
-Frid3 <- filter(Frid, Amb == "Pequeno")
-
-Frid2$CP
-Frid2$P
-Frid2$ANO
-Frid2$Longitude
-Frid2$Latitude
-Frid2$Amb
-
-Frid2
+Frid2 <- filter(Frid, Amb == "Pequeno")
+Frid3 <- filter(Frid, Amb == "Grande")
 
 summary(Frid2)
 ##        CP               P               ANO          state               Amb              Longitude     
@@ -4268,14 +2884,14 @@ summary(Frid2)
 
 
 
-## L.friderici_AmbGran - teste de normalidade --------------------------------##
+## L.friderici_AmbPeque - teste de normalidade --------------------------------##
 shapiro.test(Frid2$CP) ## W = 0.92448, p-value = 0.1991
 shapiro.test(Frid2$P)  ## W = 0.75675, p-value = 0.0007669
 shapiro.test(Frid2$ANO) ## W = 0.84018, p-value = 0.009802
 
 
 
-## L.friderici_AmbGran - cor e cov -------------------------------------------##
+## L.friderici_AmbPeque - cor e cov -------------------------------------------##
 cor(Frid2$ANO, Frid2$CP) ## -0.5140923
 cor(Frid2$ANO, Frid2$P)  ## -0.382363
 cor(Frid2$ANO, Frid2$CP, method="spearman") ## -0.4235044
@@ -4286,53 +2902,7 @@ cov(Frid2$ANO, Frid2$P)  ## -166.6233
 
 
 
-## L.friderici_AmbGran - CP --------------------------------------------------##
-
-model.Frid2.cp.gamm<-gamm(CP~s(ANO), data=Frid2)
-summary(model.Frid2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    9.056      0.903   10.03 9.01e-08 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value  
-## s(ANO)   1      1 5.388  0.0359 *
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.212   
-## Scale est. = 12.23     n = 16
-
-model2.Frid2.cp.gamm<-gamm(log(CP)~s(ANO), data=Frid2)
-summary(model2.Frid2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.0948     0.1053   19.89 1.16e-11 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value  
-## s(ANO)   1      1 5.521   0.034 *
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.217   
-## Scale est. = 0.16639   n = 16
+## L.friderici_AmbPeque - CP --------------------------------------------------##
 
 model3.Frid2.cp.lm<-lm(CP~ANO, data = Frid2)
 summary(model3.Frid2.cp.lm)
@@ -4376,126 +2946,7 @@ summary(model4.Frid2.cp.lm)
 
 
 
-model.Frid2.cp.gam <- gam(CP ~ s(ANO, k = 12), data = Frid2, method = "REML", sp = 0.0001)
-summary(model.Frid2.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 12)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  9.056      1.031    8.78 0.000623 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 10.64  10.94 0.991   0.547
-##
-## R-sq.(adj) =  0.0401   Deviance explained = 72.1%
-## -REML =  62.72  Scale est. = 17.021    n = 16
-
-
-gam.check(model.Frid2.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-8.680354e-10,-8.680354e-10]
-## (score 62.71981 & scale 17.0211).
-## Hessian positive definite, eigenvalue range [7,7].
-## Model rank =  12 / 12 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 11.0 10.6    1.37    0.86
-
-
-
-model2.Frid2.cp.gam <- gam(log(CP) ~ s(ANO, k = 12), data = Frid2, method = "REML", sp = 0.0001)
-summary(model2.Frid2.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 12)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.0948     0.1297   16.16 4.69e-05 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 10.64  10.94 0.809   0.642
-##
-## R-sq.(adj) =  -0.108   Deviance explained = 67.8%
-## -REML = 33.668  Scale est. = 0.26902   n = 16
-
-gam.check(model2.Frid2.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.198231e-08,-1.198231e-08]
-## (score 33.66785 & scale 0.2690212).
-## Hessian positive definite, eigenvalue range [7,7].
-## Model rank =  12 / 12 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 11.0 10.6    1.36    0.88
-
-
-
 ## L.friderici_AmbGran - P ---------------------------------------------------##
-
-model.Frid2.p.gamm<-gamm(P~s(ANO), data = Frid2)
-summary(model.Frid2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   29.919      8.448   3.542  0.00325 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 2.569   0.131
-##
-## R-sq.(adj) =  0.0852   
-## Scale est. = 1070.4    n = 16
-
-model2.Frid2.p.gamm<-gamm(log(P)~s(ANO), data=Frid2)
-summary(model2.Frid2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-## log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.5386     0.3209    7.91 1.56e-06 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##  edf Ref.df     F p-value  
-## s(ANO)   1      1 5.188   0.039 *
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.204   
-## Scale est. = 1.545     n = 16
 
 model3.Frid2.p.lm<-lm(P~ANO, data = Frid2)
 summary(model3.Frid2.p.lm)
@@ -4614,15 +3065,6 @@ gam.check(model2.Frid2.p.gam)
 
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Frid3$CP
-Frid3$P
-Frid3$ANO
-Frid3$Longitude
-Frid3$Latitude
-Frid3$Amb
-
 Frid3
 
 summary(Frid3)
@@ -4642,14 +3084,14 @@ summary(Frid3)
 ## Max.   :-17.21  
 
 
-## L.friderici_AmbPeque - teste de normalidade -------------------------------##
+## L.friderici_AmbGran - teste de normalidade -------------------------------##
 shapiro.test(Frid3$CP) ## W = 0.91875, p-value = 0.03683
 shapiro.test(Frid3$P)  ## W = 0.81283, p-value = 0.0002302
 shapiro.test(Frid3$ANO) ## W = 0.93495, p-value = 0.09144
 
 
 
-## L.friderici_AmbPeque - cor e cov ------------------------------------------##
+## L.friderici_AmbGran - cor e cov ------------------------------------------##
 cor(Frid3$ANO, Frid3$CP) ## 0.1644878
 cor(Frid3$ANO, Frid3$P)  ## 0.1842263
 cor(Frid3$ANO, Frid3$CP, method="spearman") ## 0.1830492
@@ -4660,49 +3102,7 @@ cov(Frid3$ANO, Frid3$P)  ## 81.53803
 
 
 
-## L.friderici_AmbPeque - CP -------------------------------------------------##
-
-model.Frid3.cp.gamm<-gamm(CP~s(ANO), data=Frid3)
-summary(model.Frid3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   11.370      1.025    11.1 3.78e-11 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##  edf Ref.df     F p-value
-## s(ANO)   1      1 0.723   0.403
-##
-## R-sq.(adj) =  -0.0119   
-## Scale est. = 27.303    n = 27
-
-model2.Frid3.cp.gamm<-gamm(log(CP)~s(ANO), data=Frid3)
-summary(model2.Frid3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.31169    0.09747   23.72   <2e-16 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##  edf Ref.df     F p-value
-## s(ANO)   1      1 0.515    0.48
-##
-## R-sq.(adj) =  -0.0198   
-## Scale est. = 0.24703   n = 27
+## L.friderici_AmbGran - CP -------------------------------------------------##
 
 model3.Frid3.cp.lm<-lm(CP~ANO, data = Frid3)
 summary(model3.Frid3.cp.lm)
@@ -4818,49 +3218,7 @@ gam.check(model2.Frid3.cp.gam)
 
 
 
-## L.friderici_AmbPeque - P --------------------------------------------------##
-
-model.Frid3.p.gamm<-gamm(P~s(ANO), data = Frid3)
-summary(model.Frid3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    63.46      13.86    4.58 0.000111 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.913   0.348
-##
-## R-sq.(adj) =  -0.0047   
-## Scale est. = 4991.8    n = 27
-
-model2.Frid3.p.gamm<-gamm(log(P)~s(ANO), data=Frid3)
-summary(model2.Frid3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   3.2084     0.3054   10.51 1.18e-10 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.498   0.487
-##
-## R-sq.(adj) =  -0.0204   
-## Scale est. = 2.4255    n = 27
+## L.friderici_AmbGran - P --------------------------------------------------##
 
 model3.Frid3.p.lm<-lm(P~ANO, data = Frid3)
 summary(model3.Frid3.p.lm)
@@ -4979,18 +3337,8 @@ gam.check(model2.Frid3.p.gam)
 ##----------------------------------------------------------------------------##
                              ## P.lineatus ## 
 
-dir()
 
-Line <- read.table("P.lineatus_Geral2.txt", header=T)
-
-Line$CP
-Line$P
-Line$ANO
-Line$Longitude
-Line$Latitude
-Line$Amb
-
-Line
+Line <- read.table("P.lineatus.txt", header=T)
 
 summary(Line)
 ##        CP              P               ANO          state               Amb              Longitude     
@@ -5031,16 +3379,6 @@ cov(Line$ANO, Line$P)  ## -145.2673
 
 
 ## P.lineatus_Geral - CP -----------------------------------------------------##
-
-model.Line.cp.gamm<-gamm(CP~s(ANO), random=list(Amb=~1), data = Line)
-summary(model.Line.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-##  A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Line.cp.gamm<-gamm(log(CP)~s(ANO), random=list(Amb=~1), data=Line)
-summary(model2.Line.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-##  A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Line.cp.gamm<-gamm(CP~ANO, random=list(Amb=~1), data=Line)
 summary(model3.Line.cp.gamm$gam)
@@ -5146,95 +3484,7 @@ summary(model6.Line.cp.lmer)
 
 
 
-model.Line.cp.gam <- gam(CP ~ s(ANO, k = 7), data = Line, method = "REML", sp = 0.0001)
-summary(model.Line.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  12.5947     0.5943   21.19 1.28e-11 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 4.73  5.291 3.829  0.0226 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.499   Deviance explained = 63.1%
-## -REML = 49.795  Scale est. = 6.7112    n = 19
-
-gam.check(model.Line.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.191664e-07,-2.191664e-07]
-## (score 49.79538 & scale 6.71125).
-## Hessian positive definite, eigenvalue range [8.5,8.5].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 4.73    1.44    0.96
-
-
-
-model2.Line.cp.gam <- gam(log(CP) ~ s(ANO, k = 7), data = Line, method = "REML", sp = 0.0001)
-summary(model2.Line.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.49214    0.04742   52.55   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 4.73  5.291 3.884  0.0211 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.516   Deviance explained = 64.3%
-## -REML = 7.0476  Scale est. = 0.042733  n = 19
-
-gam.check(model2.Line.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.017121e-07,-2.017121e-07]
-## (score 7.047636 & scale 0.04273316).
-## Hessian positive definite, eigenvalue range [8.5,8.5].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 4.73    1.46    0.96
-
-
-
 ## P.lineatus_Geral - P ------------------------------------------------------##
-
-model.Line.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data = Line)
-summary(model.Line.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Line.p.gamm<-gamm(log(P)~s(ANO), random=list(Amb=~1), data=Line)
-summary(model2.Line.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Line.p.gamm<-gamm(P~ANO, random=list(Amb=~1), data=Line)
 summary(model3.Line.p.gamm$gam)
@@ -5332,96 +3582,9 @@ summary(model6.Line.p.lmer)
 
 
 
-model.Line.p.gam <- gam(P ~ s(ANO, k = 7), data = Line, method = "REML", sp = 0.0001)
-summary(model.Line.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  P ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  68.516      9.053   7.569  3.6e-06 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 4.73  5.291 1.925   0.156
-##
-## R-sq.(adj) =  0.292   Deviance explained = 47.8%
-## -REML = 95.891  Scale est. = 1557.1    n = 19
-
-gam.check(model.Line.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.276008e-05,-1.276008e-05]
-## (score 95.89107 & scale 1557.094).
-## Hessian positive definite, eigenvalue range [8.500013,8.500013].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 4.73    1.39    0.92
-
-
-
-model2.Line.p.gam <- gam(log(P) ~ s(ANO, k = 7), data = Line, method = "REML", sp = 0.0001)
-summary(model2.Line.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(P) ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.9372     0.1505   26.16 8.29e-13 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 4.73  5.291 2.367  0.0922 .
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.395   Deviance explained = 55.4%
-## -REML = 26.763  Scale est. = 0.4303    n = 19
-
-gam.check(model2.Line.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-4.318894e-06,-4.318894e-06]
-## (score 26.76324 & scale 0.4303045).
-## Hessian positive definite, eigenvalue range [8.500004,8.500004].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 4.73    1.41    0.94
-
-
-
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Line2 <- filter(Line, Amb == "Pequeno")
-
-Line2$CP
-Line2$P
-Line2$ANO
-Line2$Longitude
-Line2$Latitude
-Line2$Amb
-
-Line2
+Line2 <- filter(Line, Amb == "Grande")
 
 summary(Line2)
 ##       CP               P               ANO          state               Amb              Longitude     
@@ -5443,14 +3606,14 @@ summary(Line2)
 
 
 
-## P.lineatus_AmbPeque - teste de normalidade --------------------------------##
+## P.lineatus_AmbGran - teste de normalidade --------------------------------##
 shapiro.test(Line2$CP) ## W = 0.91074, p-value = 0.1196
 shapiro.test(Line2$P)  ## W = 0.91619, p-value = 0.1464
 shapiro.test(Line2$ANO) ## W = 0.83875, p-value = 0.009347
 
 
 
-## P.lineatus_AmbPeque - cor e cov -------------------------------------------##
+## P.lineatus_AmbGran - cor e cov -------------------------------------------##
 cor(Line2$ANO, Line2$CP) ## -0.4688927
 cor(Line2$ANO, Line2$P)  ## -0.4064314
 cor(Line2$ANO, Line2$CP, method="spearman") ## -0.471159
@@ -5461,17 +3624,7 @@ cov(Line2$ANO, Line2$P)  ## -152.1417
 
 
 
-## P.lineatus_AmbPeque - CP --------------------------------------------------##
-
-model.Line2.cp.gamm<-gamm(CP~s(ANO), data=Line2)
-summary(model.Line2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Line2.cp.gamm<-gamm(log(CP)~s(ANO), data=Line2)
-summary(model2.Line2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
+## P.lineatus_AmbGran - CP --------------------------------------------------##
 
 model3.Line2.cp.lm<-lm(CP~ANO, data = Line2)
 summary(model3.Line2.cp.lm)
@@ -5596,16 +3749,6 @@ gam.check(model2.Line2.cp.gam)
 
 ## P.lineatus_AmbPeque - P ---------------------------------------------------##
 
-model.Line2.p.gamm<-gamm(P~s(ANO), data = Line2)
-summary(model.Line2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Line2.p.gamm<-gamm(log(P)~s(ANO), data=Line2)
-summary(model2.Line2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
 model3.Line2.p.lm<-lm(P~ANO, data = Line2)
 summary(model3.Line2.p.lm)
 ## Call:
@@ -5726,11 +3869,7 @@ gam.check(model2.Line2.p.gam)
 ##----------------------------------------------------------------------------##
                             ## P.maculatus ##
 
-dir()
-
-Macu <- read.table("P.maculatus_Geral2.txt", header=T)
-
-Macu$P
+Macu <- read.table("P.maculatus.txt", header=T)
 
 summary(Macu)
 ## catalognumber         CP              P               day            month             ANO      
@@ -5770,16 +3909,6 @@ cov(Macu$ANO, Macu$P)  ## -988.931
 
 
 ## P.maculatus_Geral - CP ----------------------------------------------------##
-
-model.Macu.cp.gamm<-gamm(CP~s(ANO), random=list(Amb=~1), data=Macu)
-summary(model.Macu.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Macu.cp.gamm<-gamm(log(CP)~s(ANO), random=list(Amb=~1), data=Macu)
-summary(model.Macu.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Macu.cp.gamm<-gamm(CP~ANO, random=list(Amb=~1), data=Macu)
 summary(model3.Macu.cp.gamm$gam)
@@ -5869,91 +3998,8 @@ summary(model6.Macu.cp.lmer)
 
 
 
-model.Macu.cp.gam <- gam(CP ~ s(ANO, k = 7), data = Macu, method = "REML", sp = 0.0001)
-summary(model.Macu.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  13.573      1.229   11.05 2.93e-07 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 3.094  3.608 0.497   0.748
-##
-## R-sq.(adj) =  -0.079   Deviance explained = 15.9%
-## -REML = 43.975  Scale est. = 22.643    n = 15
-
-gam.check(model.Macu.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.683308e-08,-2.683308e-08]
-## (score 43.97454 & scale 22.64329).
-## Hessian positive definite, eigenvalue range [6.5,6.5].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 3.09    1.21    0.68
-
-
-
-model2.Macu.cp.gam <- gam(log(CP) ~ s(ANO, k = 6), data = Macu, method = "REML", sp = 0.0001)
-summary(model2.Macu.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 6)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.5434     0.1027   24.77 7.78e-11 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 3.241  3.759 0.704   0.626
-##
-## R-sq.(adj) =  -0.013   Deviance explained = 22.2%
-## -REML = 12.024  Scale est. = 0.1581    n = 15
-
-gam.check(model2.Macu.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.003265e-08,-1.003265e-08]
-## (score 12.02358 & scale 0.1580965).
-## Hessian positive definite, eigenvalue range [6.5,6.5].
-## Model rank =  6 / 6 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 5.00 3.24    1.26    0.77
-
-
 
 ## P.maculatus_Geral - P ------------------------------------------------------##
-
-model.Macu.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data = Macu)
-summary(model.Macu.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Macu.p.gamm<-gamm(log(P)~s(ANO), random=list(Amb=~1), data=Macu)
-summary(model2.Macu.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Macu.p.gamm<-gamm(P~ANO, random=list(Amb=~1), data=Macu)
 summary(model3.Macu.p.gamm$gam)
@@ -6049,94 +4095,9 @@ summary(model6.Macu.p.lmer)
 
 
 
-model.Macu.p.gam <- gam(P ~ s(ANO, k = 7), data = Macu, method = "REML", sp = 0.0001)
-summary(model.Macu.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 7)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  60.69      17.00    3.57  0.00446 **
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 3.094  3.608 0.424   0.777
-##
-## R-sq.(adj) =  -0.119   Deviance explained = 12.8%
-## -REML = 78.004  Scale est. = 4335.7    n = 15
-
-gam.check(model.Macu.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-3.459015e-08,-3.459015e-08]
-## (score 78.00399 & scale 4335.678).
-## Hessian positive definite, eigenvalue range [6.5,6.5].
-## Model rank =  7 / 7 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 6.00 3.09    0.99    0.38
-
-
-
-model2.Macu.p.gam <- gam(log(P) ~ s(ANO, k = 6), data = Macu, method = "REML", sp = 0.0001)
-summary(model2.Macu.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 6)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.6077     0.3137    11.5 2.22e-07 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 3.241  3.759 0.364   0.833
-##
-## R-sq.(adj) =  -0.11   Deviance explained = 14.7%
-## -REML = 26.531  Scale est. = 1.4758    n = 15
-
-gam.check(model2.Macu.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-3.846753e-08,-3.846753e-08]
-## (score 26.5315 & scale 1.475834).
-## Hessian positive definite, eigenvalue range [6.5,6.5].
-## Model rank =  6 / 6 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 5.00 3.24    1.21    0.73
-
-
-
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Macu2 <- filter(Macu, Amb == "Pequeno")
-
-Macu2$CP
-Macu2$P
-Macu2$ANO
-Macu2$Longitude
-Macu2$Latitude
-Macu2$Amb
-
-Macu2
+Macu2 <- filter(Macu, Amb == "Grande")
 
 summary(Macu2)
 ## catalognumber         CP              P               day            month             ANO      
@@ -6156,14 +4117,14 @@ summary(Macu2)
 
 
 
-## P.maculatus_AmbPeque - teste de normalidade -------------------------------##
+## P.maculatus_AmbGran - teste de normalidade -------------------------------##
 shapiro.test(Macu2$CP) ## W = 0.9913, p-value = 0.9998
 shapiro.test(Macu2$P)  ## W = 0.77392, p-value = 0.002418
 shapiro.test(Macu2$ANO) ## W = 0.57821, p-value = 2.611e-05
 
 
 
-## P.maculatus_AmbPeque - cor e cov ------------------------------------------##
+## P.maculatus_AmbGran - cor e cov ------------------------------------------##
 cor(Macu2$ANO, Macu2$CP) ## -0.08297348
 cor(Macu2$ANO, Macu2$P)  ## -0.3324333
 cor(Macu2$ANO, Macu2$CP, method="spearman") ## 0.1005728
@@ -6174,17 +4135,7 @@ cov(Macu2$ANO, Macu2$P)  ## -985.3764
 
 
 
-## P.maculatus_AmbPeque - CP -------------------------------------------------##
-
-model.Macu2.cp.gamm<-gamm(CP~s(ANO), data=Macu2)
-summary(model.Macu2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Macu2.cp.gamm<-gamm(log(CP)~s(ANO), data=Macu2)
-summary(model2.Macu2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
+## P.maculatus_AmbGran - CP -------------------------------------------------##
 
 model3.Macu2.cp.lm<-lm(CP~ANO, data = Macu2)
 summary(model3.Macu2.cp.lm)
@@ -6299,16 +4250,6 @@ gam.check(model2.Macu2.cp.gam)
 
 
 ## P.maculatus_AmbPeque - P --------------------------------------------------##
-
-model.Macu2.p.gamm<-gamm(P~s(ANO), data = Macu2)
-summary(model.Macu2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Macu2.p.gamm<-gamm(log(P)~s(ANO), data=Macu2)
-summary(model2.Macu2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Macu2.p.lm<-lm(P~ANO, data = Macu2)
 summary(model3.Macu2.p.lm)
@@ -6426,18 +4367,7 @@ gam.check(model2.Macu2.p.gam)
 ##----------------------------------------------------------------------------##
                             ## R.latirostris ## 
 
-dir()
-
-Lati <- read.table("R.latirostris_Geral2.txt", header=T)
-
-Lati$CP
-Lati$P
-Lati$ANO
-Lati$Longitude
-Lati$Latitude
-Lati$Amb
-
-Lati
+Lati <- read.table("R.latirostris.txt", header=T)
 
 summary(Lati)
 ##        CP               P               ANO          state               Amb              Longitude     
@@ -6616,79 +4546,6 @@ summary(model6.Lati.cp.lmer)
 
 
 
-model.Lati.cp.gam <- gam(CP ~ s(ANO, k = 10), data = Lati, method = "REML", sp = 0.0001)
-summary(model.Lati.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 10)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  9.5765     0.6195   15.46    1e-06 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 8.903  8.997 2.141   0.161
-##
-## R-sq.(adj) =  0.404   Deviance explained = 73.5%
-## -REML = 55.909  Scale est. = 6.5249    n = 17
-
-gam.check(model.Lati.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.334701e-10,-2.334701e-10]
-## (score 55.90855 & scale 6.524949).
-## Hessian positive definite, eigenvalue range [7.5,7.5].
-## Model rank =  10 / 10 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##        k' edf k-index p-value
-## s(ANO) 9.0 8.9    1.64    0.99
-
-
-
-model2.Lati.cp.gam <- gam(log(CP) ~ s(ANO, k = 10), data = Lati, method = "REML", sp = 0.0001)
-summary(model2.Lati.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 10)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.21320    0.06538   33.85 4.14e-09 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 8.903  8.997 1.389   0.335
-##
-## R-sq.(adj) =  0.195   Deviance explained = 64.3%
-## -REML =  22.05  Scale est. = 0.072676  n = 17
-
-gam.check(model2.Lati.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-4.556082e-08,-4.556082e-08]
-## (score 22.04997 & scale 0.07267644).
-## Hessian positive definite, eigenvalue range [7.5,7.5].
-## Model rank =  10 / 10 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##        k' edf k-index p-value
-## s(ANO) 9.0 8.9    1.62    0.99
-
-
 
 ## R.latirostris_Geral - P ---------------------------------------------------##
 
@@ -6828,96 +4685,9 @@ summary(model6.Lati.p.lmer)
 
 
 
-model.Lati.p.gam <- gam(P ~ s(ANO, k = 10), data = Lati, method = "REML", sp = 0.0001)
-summary(model.Lati.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 10)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  9.941      1.656   6.005 0.000512 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 8.903  8.997 6.03  0.0133 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.745   Deviance explained = 88.7%
-## -REML = 71.188  Scale est. = 46.593    n = 17
-
-gam.check(model.Lati.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.008078e-05,-1.008078e-05]
-## (score 71.18848 & scale 46.59341).
-## Hessian positive definite, eigenvalue range [7.50001,7.50001].
-## Model rank =  10 / 10 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##        k' edf k-index p-value
-## s(ANO) 9.0 8.9    1.69       1
-
-
-
-model2.Lati.p.gam <- gam(log(P) ~ s(ANO, k = 10), data = Lati, method = "REML", sp = 0.0001)
-summary(model2.Lati.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 10)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.7607     0.2345   7.508 0.000127 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 8.903  8.997 1.177   0.421
-##
-## R-sq.(adj) =  0.103   Deviance explained = 60.2%
-## -REML = 41.127  Scale est. = 0.93482   n = 17
-
-gam.check(model2.Lati.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-2.00279e-07,-2.00279e-07]
-## (score 41.12725 & scale 0.9348242).
-## Hessian positive definite, eigenvalue range [7.5,7.5].
-## Model rank =  10 / 10 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##        k' edf k-index p-value
-## s(ANO) 9.0 8.9    1.59    0.98
-
-
-
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Lati2 <- filter(Lati, Amb == "Pequeno")
-
-Lati2$CP
-Lati2$P
-Lati2$ANO
-Lati2$Longitude
-Lati2$Latitude
-Lati2$Amb
-
-Lati2
+Lati2 <- filter(Lati, Amb == "Grande")
 
 summary(Lati2)
 ##       CP               P              ANO          state               Amb              Longitude     
@@ -6938,14 +4708,14 @@ summary(Lati2)
 
 
 
-## R.latirostris_AmbPeque - teste de normalidade -----------------------------##
+## R.latirostris_AmbGran - teste de normalidade -----------------------------##
 shapiro.test(Lati2$CP) ## W = 0.70844, p-value = 0.001781
 shapiro.test(Lati2$P)  ## W = 0.52585, p-value = 1.288e-05
 shapiro.test(Lati2$ANO) ## W = 0.92836, p-value = 0.4659
 
 
 
-## R.latirostris_AmbPeque - cor e cov ----------------------------------------##
+## R.latirostris_AmbGran - cor e cov ----------------------------------------##
 cor(Lati2$ANO, Lati2$CP) ## 0.2010028
 cor(Lati2$ANO, Lati2$P)  ## 0.1427503
 cor(Lati2$ANO, Lati2$CP, method="spearman") ## 0.369761
@@ -6956,17 +4726,7 @@ cov(Lati2$ANO, Lati2$P)  ## 12.98056
 
 
 
-## R.latirostris_AmbPeque - CP -----------------------------------------------##
-
-model.Lati2.cp.gamm<-gamm(CP~s(ANO), data=Lati2)
-summary(model.Lati2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Lati2.cp.gamm<-gamm(log(CP)~s(ANO), data=Lati2)
-summary(model2.Lati2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
+## R.latirostris_AmbGran - CP -----------------------------------------------##
 
 model3.Lati2.cp.lm<-lm(CP~ANO, data = Lati2)
 summary(model3.Lati2.cp.lm)
@@ -7022,9 +4782,7 @@ summary(model.Lati2.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 4.936  4.998 13.08  0.0296 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 4.936  4.998 13.08  0.296 
 ##
 ## R-sq.(adj) =  0.885   Deviance explained = 95.6%
 ## -REML = 22.666  Scale est. = 1.9537    n = 9
@@ -7061,9 +4819,7 @@ summary(model2.Lati2.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 3.968  3.999 8.142  0.0336 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 3.968  3.999 8.142  0.336 
 ##
 ## R-sq.(adj) =  0.783   Deviance explained = 89.1%
 ## -REML = 5.9254  Scale est. = 0.026518  n = 9
@@ -7085,16 +4841,6 @@ gam.check(model2.Lati2.cp.gam)
 
 
 ## R.latirostris_AmbPeque - P ------------------------------------------------##
-
-model.Lati2.p.gamm<-gamm(P~s(ANO), data = Lati2)
-summary(model.Lati2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Lati2.p.gamm<-gamm(log(P)~s(ANO), data=Lati2)
-summary(model2.Lati2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
 
 model3.Lati2.p.lm<-lm(P~ANO, data = Lati2)
 summary(model3.Lati2.p.lm)
@@ -7150,9 +4896,7 @@ summary(model.Lati2.p.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 5.639  5.936 33.89  0.0288 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 5.639  5.936 33.89  0.288 
 ##
 ## R-sq.(adj) =  0.962   Deviance explained = 98.9%
 ## -REML = 30.534  Scale est. = 12.563    n = 9
@@ -7214,18 +4958,7 @@ gam.check(model2.Lati2.p.gam)
 ##----------------------------------------------------------------------------##
                                  ## R.quelen ## 
 
-dir()
-
-Quel <- read.table("R.quelen_Geral2.txt", header=T)
-
-Quel$CP
-Quel$P
-Quel$ANO
-Quel$Longitude
-Quel$Latitude
-Quel$Amb
-
-Quel
+Quel <- read.table("R.quelen.txt", header=T)
 
 summary(Quel)
 ##       CP               P               ANO          state               Amb              Longitude     
@@ -7397,80 +5130,6 @@ summary(model6.Quel.cp.lmer)
 
 
 
-model.Quel.cp.gam <- gam(CP ~ s(ANO, k = 19), data = Quel, method = "REML", sp = 0.0001)
-summary(model.Quel.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 19)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  9.1252     0.2765   33.01   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 17.85     18 1.42    0.13
-##
-## R-sq.(adj) =  0.0461   Deviance explained = 15.1%
-## -REML = 486.04  Scale est. = 12.457    n = 163
-
-gam.check(model.Quel.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-3.522577e-08,-3.522577e-08]
-## (score 486.0402 & scale 12.45735).
-## Hessian positive definite, eigenvalue range [80.5,80.5].
-## Model rank =  19 / 19 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 18.0 17.9    1.03    0.6
-
-
-
-model2.Quel.cp.gam <- gam(log(CP) ~ s(ANO, k = 19), data = Quel, method = "REML", sp = 0.001)
-summary(model2.Quel.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 19)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.13833    0.02921   73.21   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 16.81  17.75 1.188    0.28
-##
-## R-sq.(adj) =  0.0313   Deviance explained = 13.2%
-## -REML = 106.23  Scale est. = 0.13904   n = 163
-
-gam.check(model2.Quel.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-5.593317e-08,-5.593317e-08]
-## (score 106.2281 & scale 0.1390445).
-## Hessian positive definite, eigenvalue range [80.5,80.5].
-## Model rank =  19 / 19 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 18.0 16.8    1.02    0.61
-
-
-
 ## R.quelen_Geral - P --------------------------------------------------------##
 
 model.Quel.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data=Quel)
@@ -7603,95 +5262,12 @@ summary(model6.Quel.p.lmer)
 
 
 
-model.Quel.p.gam <- gam(P ~ s(ANO, k = 19), data = Quel, method = "REML", sp = 0.001)
-summary(model.Quel.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 19)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  20.786      2.014   10.32   <2e-16 ***
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 16.81  17.75 1.343    0.17
-##
-## R-sq.(adj) =  0.0444   Deviance explained = 14.4%
-## -REML =  787.5  Scale est. = 660.83    n = 163
-
-gam.check(model.Quel.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-4.236453e-08,-4.236453e-08]
-## (score 787.5005 & scale 660.8321).
-## Hessian positive definite, eigenvalue range [80.5,80.5].
-## Model rank =  19 / 19 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 18.0 16.8    1.12    0.94
-
-
-
-model2.Quel.p.gam <- gam(log(P) ~ s(ANO, k = 19), data = Quel, method = "REML", sp = 0.001)
-summary(model2.Quel.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 19)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.39957    0.08848   27.12   <2e-16 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 16.81  17.75 1.11   0.349
-##
-## R-sq.(adj) =  0.0215   Deviance explained = 12.3%
-## -REML = 284.53  Scale est. = 1.2762    n = 163
-
-gam.check(model2.Quel.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-6.375538e-08,-6.375538e-08]
-## (score 284.527 & scale 1.276182).
-## Hessian positive definite, eigenvalue range [80.5,80.5].
-## Model rank =  19 / 19 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 18.0 16.8    1.04     0.64
-
-
-
 ##----------------------------------------------------------------------------##
 
 dir()
 
-Quel2 <- filter(Quel, Amb == "Grande")
-Quel3 <- filter(Quel, Amb == "Pequeno")
-
-Quel2$CP
-Quel2$P
-Quel2$ANO
-Quel2$Longitude
-Quel2$Latitude
-Quel2$Amb
-
-Quel2
+Quel2 <- filter(Quel, Amb == "Pequeno")
+Quel3 <- filter(Quel, Amb == "Grande")
 
 summary(Quel2)
 ##       CP               P                ANO          state               Amb              Longitude     
@@ -7713,14 +5289,14 @@ summary(Quel2)
 
 
 
-## R.quelen_AmbGran - teste de normalidade -----------------------------------##
+## R.quelen_AmbPeque - teste de normalidade -----------------------------------##
 shapiro.test(Quel2$CP) ## W = 0.90024, p-value = 2.442e-07
 shapiro.test(Quel2$P)  ## W = 0.62537, p-value = 6.605e-16
 shapiro.test(Quel2$ANO) ## W = 0.86153, p-value = 4.09e-09
 
 
 
-## R.quelen_AmbGran - cor e cov ----------------------------------------------##
+## R.quelen_AmbPeque - cor e cov ----------------------------------------------##
 cor(Quel2$ANO, Quel2$CP) ## -0.1163727
 cor(Quel2$ANO, Quel2$P)  ## -0.07092467
 cor(Quel2$ANO, Quel2$CP, method="spearman") ## -0.1063919
@@ -7731,49 +5307,7 @@ cov(Quel2$ANO, Quel2$P)  ## -7.886441
 
 
 
-## R.quelen_AmbGran - CP -----------------------------------------------------##
-
-model.Quel2.cp.gamm<-gamm(CP~s(ANO), data=Quel2)
-summary(model.Quel2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   8.7831     0.3098   28.35   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 1.606   0.208
-##
-## R-sq.(adj) =  0.00504   
-## Scale est. = 11.227    n = 118
-
-model2.Quel2.cp.gamm<-gamm(log(CP)~s(ANO), data=Quel2)
-summary(model2.Quel2.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.10751    0.03249   64.87   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 1.823    0.18
-##
-## R-sq.(adj) =  0.00685   
-## Scale est. = 0.12348   n = 118
+## R.quelen_AmbPeque - CP -----------------------------------------------------##
 
 model3.Quel2.cp.lm<-lm(CP~ANO, data = Quel2)
 summary(model3.Quel2.cp.lm)
@@ -7887,49 +5421,7 @@ gam.check(model2.Quel2.cp.gam)
 
 
 
-## R.quelen_AmbGran - P ------------------------------------------------------##
-
-model.Quel2.p.gamm<-gamm(P~s(ANO), data = Quel2)
-summary(model.Quel2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   19.108      2.422    7.89 1.86e-12 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO)   1      1 0.592   0.443
-##
-## R-sq.(adj) =  -0.00355   
-## Scale est. = 686.32    n = 118
-
-model2.Quel2.p.gamm<-gamm(log(P)~s(ANO), data=Quel2)
-summary(model2.Quel2.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.3301     0.1001   23.29   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F p-value
-##s(ANO)   1      1 1.72   0.192
-##
-##R-sq.(adj) =  0.00599   
-## Scale est. = 1.1712    n = 118
+## R.quelen_AmbPeque - P ------------------------------------------------------##
 
 model3.Quel2.p.lm<-lm(P~ANO, data = Quel2)
 summary(model3.Quel2.p.lm)
@@ -8046,13 +5538,6 @@ gam.check(model2.Quel2.p.gam)
 ##----------------------------------------------------------------------------##
 
 
-Quel3$CP
-Quel3$P
-Quel3$ANO
-Quel3$Longitude
-Quel3$Latitude
-Quel3$Amb
-
 Quel3
 
 summary(Quel3)
@@ -8074,14 +5559,14 @@ summary(Quel3)
 
 
 
-## R.quelen_AmbPeque - teste de normalidade ----------------------------------##
+## R.quelen_AmbGran - teste de normalidade ----------------------------------##
 shapiro.test(Quel3$CP) ##  W = 0.93631, p-value = 0.01577
 shapiro.test(Quel3$P)  ## W = 0.83428, p-value = 1.478e-05
 shapiro.test(Quel3$ANO) ## W = 0.93607, p-value = 0.01546
 
 
 
-## R.quelen_AmbPeque - cor e cov ---------------------------------------------##
+## R.quelen_AmbGran - cor e cov ---------------------------------------------##
 cor(Quel3$ANO, Quel3$CP) ## 0.3803416
 cor(Quel3$ANO, Quel3$P)  ## 0.4068781
 cor(Quel3$ANO, Quel3$CP, method="spearman") ## 0.3235306
@@ -8092,53 +5577,7 @@ cov(Quel3$ANO, Quel3$P)  ## 39.97283
 
 
 
-## R.quelen_AmbPeque - CP ----------------------------------------------------##
-
-model.Quel3.cp.gamm<-gamm(CP~s(ANO), data=Quel3)
-summary(model.Quel3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   CP ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  10.0222     0.5587   17.94   <2e-16 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value   
-## s(ANO)   1      1 7.442 0.00919 **
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.125   
-## Scale est. = 13.734    n = 45
-
-model2.Quel3.cp.gamm<-gamm(log(CP)~s(ANO), data=Quel3)
-summary(model2.Quel3.cp.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(CP) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.21915    0.05988   37.06   <2e-16 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value  
-## s(ANO)   1      1 5.897  0.0194 *
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0977   
-## Scale est. = 0.15774   n = 45
+## R.quelen_AmbGran - CP ----------------------------------------------------##
 
 model3.Quel3.cp.lm<-lm(CP~ANO, data = Quel3)
 summary(model3.Quel3.cp.lm)
@@ -8151,10 +5590,8 @@ summary(model3.Quel3.cp.lm)
 ##
 ## Coefficients:
 ##   Estimate Std. Error t value Pr(>|t|)   
-## (Intercept) -804.8949   302.1869  -2.664  0.01084 * 
-##   ANO            0.4057     0.1504   2.697  0.00996 **
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## (Intercept) -804.8949   302.1869  -2.664  0.1084 
+##   ANO            0.4057     0.1504   2.697  0.996 
 ##
 ## Residual standard error: 3.791 on 43 degrees of freedom
 ## Multiple R-squared:  0.1447,	Adjusted R-squared:  0.1248 
@@ -8171,10 +5608,8 @@ summary(model4.Quel3.cp.lm)
 ##
 ## Coefficients:
 ##   Estimate Std. Error t value Pr(>|t|)  
-## (Intercept) -75.52685   32.38616  -2.332   0.0244 *
-##   ANO           0.03871    0.01612   2.401   0.0208 *
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## (Intercept) -75.52685   32.38616  -2.332   0.244 
+##   ANO           0.03871    0.01612   2.401   0.208 
 ##
 ## Residual standard error: 0.4063 on 43 degrees of freedom
 ## Multiple R-squared:  0.1182,	Adjusted R-squared:  0.09767 
@@ -8198,9 +5633,7 @@ summary(model.Quel3.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.92     11 3.502 0.00245 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.92     11 3.502 0.245
 ##
 ## R-sq.(adj) =  0.389   Deviance explained = 54.1%
 ## -REML = 142.05  Scale est. = 10.035    n = 45
@@ -8237,9 +5670,7 @@ summary(model2.Quel3.cp.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.92     11 2.846 0.00954 **
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.92     11 2.846 0.954 
 ##
 ## R-sq.(adj) =   0.32   Deviance explained = 48.9%
 ## -REML = 47.633  Scale est. = 0.12434   n = 45
@@ -8260,53 +5691,7 @@ gam.check(model2.Quel3.cp.gam)
 
 
 
-## R.quelen_AmbPeque - P -----------------------------------------------------##
-
-model.Quel3.p.gamm<-gamm(P~s(ANO), data = Quel3)
-summary(model.Quel3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   P ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    25.18       2.93   8.596 1.65e-10 ***
-## ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df    F  p-value    
-## s(ANO) 5.3    5.3 5.51 0.000402 ***
-##   ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.413   
-## Scale est. = 377.71    n = 45
-
-model2.Quel3.p.gamm<-gamm(log(P)~s(ANO), data=Quel3)
-summary(model2.Quel3.p.gamm$gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##   log(P) ~ s(ANO)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   2.5818     0.1771   14.58   <2e-16 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value  
-## s(ANO)   1      1 4.869  0.0327 *
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## R-sq.(adj) =  0.0787   
-## Scale est. = 1.3802    n = 45
+## R.quelen_AmbGran - P -----------------------------------------------------##
 
 model3.Quel3.p.lm<-lm(P~ANO, data = Quel3)
 summary(model3.Quel3.p.lm)
@@ -8367,9 +5752,7 @@ summary(model.Quel3.p.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.92     11 4.04 0.000873 ***
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.92     11 4.04 0.873 
 ##
 ## R-sq.(adj) =  0.434   Deviance explained = 57.4%
 ## -REML = 220.05  Scale est. = 378.87    n = 45
@@ -8406,9 +5789,7 @@ summary(model2.Quel3.p.gam)
 ##
 ## Approximate significance of smooth terms:
 ##   edf Ref.df     F p-value
-## s(ANO) 10.36   10.9 2.694  0.0114 *
-## ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## s(ANO) 10.36   10.9 2.694  0.114 
 ##
 ## R-sq.(adj) =  0.324   Deviance explained = 48.3%
 ## -REML = 83.405  Scale est. = 1.0606    n = 45
@@ -8434,16 +5815,7 @@ gam.check(model2.Quel3.p.gam)
 
 dir()
 
-Hila <- read.table("S.hilarii_Geral2.txt", header=T)
-
-Hila$CP
-Hila$P
-Hila$ANO
-Hila$Longitude
-Hila$Latitude
-Hila$Amb
-
-Hila
+Hila <- read.table("S.hilarii.txt", header=T)
 
 summary(Hila)
 ## catalognumber         CP              P               day            month            ANO          state          
@@ -8613,80 +5985,6 @@ summary(model6.Hila.cp.lmer)
 
 
 
-model.Hila.cp.gam <- gam(CP ~ s(ANO, k = 9), data = Hila, method = "REML", sp = 0.0001)
-summary(model.Hila.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 9)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  14.633      1.734   8.441  0.00311 **
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 7.908  7.997 0.837    0.63
-##
-## R-sq.(adj) =  -0.123   Deviance explained = 68.4%
-## -REML = 50.411  Scale est. = 36.068    n = 12
-
-gam.check(model.Hila.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-8.522575e-09,-8.522575e-09]
-## (score 50.41104 & scale 36.06792).
-## Hessian positive definite, eigenvalue range [5,5].
-## Model rank =  9 / 9 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 8.00 7.91    1.66    0.98
-
-
-
-model2.Hila.cp.gam <- gam(log(CP) ~ s(ANO, k = 9), data = Hila, method = "REML", sp = 0.0001)
-summary(model2.Hila.cp.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 9)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.6116     0.1087   24.02 0.000129 ***
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 7.908  7.997 1.179   0.496
-##
-## R-sq.(adj) =  0.122   Deviance explained = 75.3%
-## -REML = 22.734  Scale est. = 0.14189   n = 12
-
-gam.check(model2.Hila.cp.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-6.795098e-11,-6.795098e-11]
-## (score 22.73423 & scale 0.1418864).
-## Hessian positive definite, eigenvalue range [5,5].
-## Model rank =  9 / 9 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 8.00 7.91     1.7    0.99
-
-
-
 ## S.hilarii_Geral - P -------------------------------------------------------##
 
 model.Hila.p.gamm<-gamm(P~s(ANO), random=list(Amb=~1), data=Hila)
@@ -8819,94 +6117,9 @@ summary(model6.Hila.p.lmer)
 
 
 
-model.Hila.p.gam <- gam(P ~ s(ANO, k = 9), data = Hila, method = "REML", sp = 0.0001)
-summary(model.Hila.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  CP ~ s(ANO, k = 9)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  79.81      32.44    2.46   0.0883 .
-##  ---
-##   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 7.908  7.997 0.418   0.858
-##
-## R-sq.(adj) =  -0.709   Deviance explained =   52%
-## -REML = 79.686  Scale est. = 12628     n = 12
-
-gam.check(model.Hila.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-3.146371e-06,-3.146371e-06]
-## (score 79.68625 & scale 12627.97).
-## Hessian positive definite, eigenvalue range [5.000003,5.000003].
-## Model rank =  9 / 9 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 8.00 7.91    1.56    0.93
-
-
-
-model2.Hila.p.gam <- gam(log(P) ~ s(ANO, k = 9), data = Hila, method = "REML", sp = 0.0001)
-summary(model2.Hila.p.gam)
-## Family: gaussian 
-## Link function: identity 
-##
-## Formula:
-##  log(CP) ~ s(ANO, k = 9)
-##
-## Parametric coefficients:
-##   Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.7522     0.3856   9.732  0.00203 **
-##  ---
-##  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Approximate significance of smooth terms:
-##   edf Ref.df     F p-value
-## s(ANO) 7.908  7.997 0.789   0.653
-##
-## R-sq.(adj) =  -0.17   Deviance explained = 67.1%
-## -REML =  35.38  Scale est. = 1.784     n = 12
-
-gam.check(model2.Hila.p.gam)
-## Method: REML   Optimizer: outer newton
-## full convergence after 5 iterations.
-## Gradient range [-1.69578e-08,-1.69578e-08]
-## (score 35.37993 & scale 1.783986).
-## Hessian positive definite, eigenvalue range [5,5].
-## Model rank =  9 / 9 
-##
-## Basis dimension (k) checking results. Low p-value (k-index<1) may
-## indicate that k is too low, especially if edf is close to k'.
-##
-##         k'  edf k-index p-value
-## s(ANO) 8.00 7.91    1.69    0.97
-
-
-
 ##----------------------------------------------------------------------------##
 
-dir()
-
-Hila2 <- filter(Hila, Amb == "Pequeno")
-
-Hila2$CP
-Hila2$P
-Hila2$ANO
-Hila2$Longitude
-Hila2$Latitude
-Hila2$Amb
-
-Hila2
+Hila2 <- filter(Hila, Amb == "Grande")
 
 summary(Hila2)
 ## catalognumber         CP              P              day            month            ANO          state          
@@ -8926,14 +6139,14 @@ summary(Hila2)
 
 
 
-## S.hilarii_AmbPeque - teste de normalidade ---------------------------------##
+## S.hilarii_AmbGran - teste de normalidade ---------------------------------##
 shapiro.test(Hila2$CP) ## W = 0.85322, p-value = 0.08085
 shapiro.test(Hila2$P)  ## W = 0.82697, p-value = 0.04129
 shapiro.test(Hila2$ANO) ## W = 0.86021, p-value = 0.09638
 
 
 
-## S.hilarii_AmbPeque - cor e cov --------------------------------------------##
+## S.hilarii_AmbGran - cor e cov --------------------------------------------##
 cor(Hila2$ANO, Hila2$CP) ## -0.03723647
 cor(Hila2$ANO, Hila2$P)  ## -0.03389677
 cor(Hila2$ANO, Hila2$CP, method="spearman") ## 0.3277427
@@ -8944,17 +6157,7 @@ cov(Hila2$ANO, Hila2$P)  ## -39.3
 
 
 
-## S.hilarii_AmbPeque - CP ---------------------------------------------------##
-
-model.Hila2.cp.gamm<-gamm(CP~s(ANO), data=Hila2)
-summary(model.Hila2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Hila2.cp.gamm<-gamm(log(CP)~s(ANO), data=Hila2)
-summary(model2.Hila2.cp.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
+## S.hilarii_AmbGran - CP ---------------------------------------------------##
 
 model3.Hila2.cp.lm<-lm(CP~ANO, data = Hila2)
 summary(model3.Hila2.cp.lm)
@@ -9068,17 +6271,7 @@ gam.check(model2.Hila2.cp.gam)
 
 
 
-## S.hilarii_AmbPeque - P ----------------------------------------------------##
-
-model.Hila2.p.gamm<-gamm(P~s(ANO), data = Hila2)
-summary(model.Hila2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
-
-model2.Hila2.p.gamm<-gamm(log(P)~s(ANO), data=Hila2)
-summary(model2.Hila2.p.gamm$gam)
-## Error in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots) : 
-## A term has fewer unique covariate combinations than specified maximum degrees of freedom
+## S.hilarii_AmbGran - P ----------------------------------------------------##
 
 model3.Hila2.p.lm<-lm(P~ANO, data = Hila2)
 summary(model3.Hila2.p.lm)
