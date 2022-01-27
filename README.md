@@ -1,21 +1,15 @@
 # Mestrado
 
 OBJETIVO:
-O objetivo geral deste projeto é testar empiricamente se houve um decréscimo no tamanho médio e peso corpóreo em espécies de peixes nativos da bacia do rio Paraná, mais especificamente da porção do Alto Paraná, entre os anos de 1900 e 2018.
+O objetivo geral desta pesquisa é avaliar se as espécies de peixes nativas da bacia do Alto Rio Paraná tiveram um decréscimo no tamanho médio e peso corpóreo ao longo do tempo. Para isso, foram obtidas variáveis de exemplares importantes para a pesca da região depositados em coleções científicas. Espera-se registrar redução nas dimensões corporais das espécies-alvo, fornecendo resultados de grande importância para identificar linhas de base apropriadas, delimitar impactos sobre o ecossistema e propor métodos de manejo ambiental adequados.
 
 VARIÁVEIS:
-O comprimento padrão (CP) e o peso (P) são as variáveis dependentes desse estudo. A principal variável explanatória é o ano da amostragem. Contudo, informações complementares de 
-cada registro nas coleções, como o tipo de ambiente, época do ano, sub-bacia hidrográfica, apetrecho de coleta, etc, são importantes para explicar as diferenças em comprimento e 
-peso observadas. 
-Sabemos que existem diferenças de tamanho entre peixes de diferentes ambientes e aqui escolhemos separar em Ambiente Grande (corrego e riacho) e Pequeno (reservatórios, lagoas, 
-rios). O apetrecho de coleta pode exercer um efeito seletivo importante na seleção de exemplares de maior ou menor tamanho, contudo, nem sempre essa informação está disponível nos 
-registros de coleções científicas, mas quando estiver, separamos por Apetrecho seletivo e não-seletivo. A época do ano e sub-bacia hidrográfica foram recuperados usando a data de 
-coleta e local de coleta como base.
+O comprimento padrão e o peso foram as variáveis dependentes desse estudo. As tomadas de dados corporais das espécies selecionadas foram realizadas com o auxílio de um paquímetro digital (mm) e régua (cm). Seguindo Oliveira et al. (2010), as medições do comprimento padrão (CP) foram obtidas medindo a distância da projeção anterior do focinho ou do lábio superior até a base da cauda, sempre em linha reta, nunca ao longo da curva do corpo do animal. Já para a tomada do peso (g) do animal, foi utilizada uma balança digital. 
+A principal variável explanatória foi o ano da amostragem. Contudo, foram também obtidas informações sobre os tipos de ambiente nos registros da coleção, com o objetivo de avaliar se esta variável também poderia contribuir para explicar as diferenças nos comprimentos e pesos observados. Dessa forma, os peixes foram divididos em dois tipos de ambientes de acordo com Castro e Polaz (2020): ambientes pequenos (córregos e riachos) e ambientes grandes (reservatórios, lagoas e rios).
+Sabemos que o apetrecho de coleta pode exercer um efeito seletivo importante na seleção de exemplares de maior ou menor tamanho, contudo, esse tipo de informação começou a ser registrado apenas muito recentemente (2003) no DZSJRP, não permitindo fazer análises ao longo de muitos anos.
 
 ANÁLISE PLANEJADA:
-Para verificar as associações entre as variáveis dependentes e explanatórias serão desenvolvidos Modelos Mistos Aditivos Generalizados (Generalized Additive Mixed Models -
-GAMMs) simples e múltiplos. Embora a obtenção das amostras não envolva efeitos de agrupamento, esse tipo de modelagem será adotado porque permite incorporar estruturas de autocorrelação espacial (no caso, influência das sub-bacias) e, também, evidenciar relações não  lineares entre as variáveis envolvidas. Desse modo, o comprimento e o peso serão 
-modelados às explanatórias, considerando cinco estruturas de correlação espacial: exponencial, gaussiana, linear, racional e esférica. Para a escolha dos modelos, serão usados os 
-menores valores de AIC (Akaike Information Criterion), o maior valor do coeficiente de determinação ajustado (R2 ajustado) e os valores de significância entre as variáveis 
-independentes e dependente (P < 0.05 como critério para o nível de significância). Todos os procedimentos das modelagens serão realizados com as funções disponíveis nos 
-pacotes “mgcv” versão 1.8–16 e “nlme” para o programa R.
+Para verificar as associações entre as variáveis dependentes e explanatórias foram desenvolvidos Modelos Mistos Aditivos Generalizados (Generalized Additive Mixed Models - GAMMs) e Modelos Mistos Generalizados (Generalized Additive Models - GAMs). Embora a obtenção das amostras não envolva efeitos de agrupamento, esse tipo de modelagem foi adotada porque permite incorporar estruturas de autocorrelação espacial (no caso, o tipo de ambiente) e, também, evidenciar relações não lineares entre as variáveis envolvidas. Quando as análises indicavam relações lineares, eram realizados Modelos Lineares Mistos (Linear Mixed Effects Models – LMERs) ou Modelos Lineares (Linear Models – LMs). 
+Assim, foram realizados dois grupos de modelagens para cada espécie. Primeiramente, foram modelados os dois tipos de ambientes juntos e, por serem dados com agrupamentos, realizou-se GAMMs, para relações não lineares, e LMERs, para relações lineares, utilizando o ambiente como fator randômico. Posteriormente, foram modelados os valores obtidos para os ambientes pequenos e ambientes grandes separadamente utilizando as funções GAMs, para relações não lineares, e LMs, para relações lineares, sem fator randômico. 
+Para a escolha dos modelos, foram usados o maior valor do coeficiente de determinação ajustado (R2 ajustado) e os valores de significância entre as variáveis independentes e dependente (adotou-se P < 0.05 como critério para o nível de significância). Todos os procedimentos das modelagens foram realizados com as funções disponíveis nos pacotes “mgcv” versão 1.8–16, “nlme4” e “lmerTest” para o programa R.
+
