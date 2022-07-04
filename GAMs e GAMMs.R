@@ -54,10 +54,10 @@ summary(model.data.p.gamm$gam)
 
 ## Modelos Aditivos Generalizados (Generalized Additive Models - GAMs)
 
-model.data2.cp.gam <- gam(CP ~ s(year), data = data2, method = "REML")
+model.data2.cp.gam <- gam(CP ~ s(year, k = n), data = data2, method = "REML", sp = n) ## k e sp variam de espécie para espécie. 
 summary(model.data2.cp.gam)
 
-model.data2.p.gam <- gam(P ~ s(year), data = data2, method = "REML")
+model.data2.p.gam <- gam(P ~ s(year, k = n), data = data2, method = "REML", sp = n)
 summary(model.data2.p.gam)
 
 
